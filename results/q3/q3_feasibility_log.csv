@@ -1,0 +1,4 @@
+chip,side,area_lower_bound,block_side_lower_bound,terminal_coordinate_lower_bound,deadspace_ratio,feasible,method,runtime_sec
+n100,444,424,67,444,0.09824457802463496,True,rectpack:MaxRectsBssf:SORT_AREA,0.0239
+n200,438,420,48,438,0.0919087514798288,True,rectpack:MaxRectsBssf:SORT_AREA,0.1635
+n300,548,523,48,548,0.09933008749130579,True,rectpack:MaxRectsBssf:SORT_AREA,0.5850

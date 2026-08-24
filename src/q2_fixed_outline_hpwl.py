@@ -230,7 +230,7 @@ def read_instance(data_dir: Path, chip: str, deadspace_ratio: float) -> Instance
                 raise ValueError(f"{chip} net pin {pin} is neither block nor terminal")
     total_area = sum(block.area for block in blocks)
     side = math.ceil(math.sqrt(total_area * (1.0 + deadspace_ratio)))
-    terminal_side = int(max(max(t.x, t.y) for t in terminals.values())) if terminals else side
+    terminal_side = math.ceil(max(max(t.x, t.y) for t in terminals.values())) if terminals else side
     max_block_side = max(max(block.width, block.height) for block in blocks)
     if max_block_side > side:
         raise ValueError(f"{chip} has a block side {max_block_side} larger than outline side {side}")

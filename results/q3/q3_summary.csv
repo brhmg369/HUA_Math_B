@@ -1,0 +1,4 @@
+chip,total_block_area,area_lower_bound,block_side_lower_bound,terminal_coordinate_lower_bound,lower_bound_side,min_feasible_side,lower_bound_attained,min_deadspace_ratio,q2_side_at_0_15,q2_hpwl_at_0_15,q3_hpwl_at_min_deadspace,hpwl_change_vs_q2,hpwl_change_ratio_vs_q2,method,refinement_method,refine_passes,accepted_moves,runtime_sec
+n100,179501,424,67,444,444,444,True,0.09824458,455,222139.5000,235824.5000,13685.0000,0.06160543,shelf_bfd:native,fast_hpwl_breakpoint,2,54,15.7717
+n200,175696,420,48,438,438,438,True,0.09190875,450,409845.0000,433383.0000,23538.0000,0.05743147,shelf_bfd:narrow,fast_hpwl_breakpoint,2,112,59.0500
+n300,273170,523,48,548,548,548,True,0.09933009,561,565977.5000,613636.5000,47659.0000,0.08420653,shelf_bfd:wide,fast_hpwl_breakpoint,2,107,109.4258
