@@ -1,0 +1,4 @@
+chip,num_blocks,total_block_area,width,height,bounding_area,aspect_ratio_long_over_short,dead_space_area,dead_space_ratio,searched_widths,tried_packings,runtime_sec,heuristic
+n100,100,179501,86,2155,185330,25.05813953,5829,0.03247336,375,3700,27.0400,rectpack_enhanced
+n200,200,175696,60,3015,180900,50.25000000,5204,0.02961934,379,3790,139.1100,rectpack_enhanced
+n300,300,273170,520,557,289640,1.07115385,16470,0.06029213,492,2952,17.8400,skyline:min_side_desc:width=520

@@ -1,0 +1,3 @@
+rectpack==0.2.2
+Pillow>=10
+numpy>=2

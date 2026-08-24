@@ -1,0 +1,4 @@
+chip,num_blocks,total_block_area,side,outline_area,requested_deadspace_ratio,actual_deadspace_ratio,hpwl,initial_hpwl_of_selected_method,relative_improvement_after_refine,method,refinement_method,refine_passes_budget,accepted_moves_selected_method,runtime_sec
+n100,100,179501,455,207025,0.150000,0.15333619,222139.5000,225147.0000,0.01335794,maxrects:degree_area+wire,exact_maxrect_reinsert,2,44,52.7054
+n200,200,175696,450,202500,0.150000,0.15255897,409845.0000,411409.0000,0.00380157,maxrects:target_yx+wire,fast_hpwl_breakpoint,2,22,62.7007
+n300,300,273170,561,314721,0.150000,0.15210675,565977.5000,571290.0000,0.00929913,maxrects:target_xy+wire,fast_hpwl_breakpoint,2,38,120.5456
