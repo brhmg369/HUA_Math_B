@@ -1,15 +1,17 @@
 """Q3 minimum-deadspace fixed-outline floorplanning.
 
 Q3 wraps the Q2 solver with an outer integer side-length feasibility search.
-Because the outline is a square and all module dimensions are integer, the
-dead-space ratio changes only when the square side length changes:
+Terminals are fixed pins for HPWL only, following the attachment statement that
+they do not participate in area or overlap constraints. Because hard-block
+dimensions and output coordinates are integer, the searched square side length
+is integer and the dead-space ratio changes only when the side changes:
 
     Gamma(L) = (L^2 - total_block_area) / total_block_area.
 
-The script first proves a lower bound from area, block dimensions and fixed
-terminal coordinates, then tries to construct a feasible packing at increasing
-integer side lengths. If the lower bound itself is feasible, the minimum side
-length is certified under these modelling assumptions.
+The script records a constructive feasibility certificate for the first side
+found feasible by deterministic packing variants. Failed heuristic trials are
+not mathematical infeasibility proofs, so the reported side is the smallest
+found under this search budget unless an external exact proof is added.
 """
 
 from __future__ import annotations
@@ -56,6 +58,7 @@ class FeasibilityResult:
     side: int
     lower_bound_side: int
     lower_bound_attained: bool
+    terminal_outside_count: int
     placements: dict[str, Placement]
     method: str
     search_log: list[dict[str, object]]
@@ -67,18 +70,18 @@ def deadspace_ratio(total_area: int, side: int) -> float:
 
 def set_instance_side(instance: Instance, side: int) -> None:
     instance.side = side
+    instance.outline_side = float(side)
     instance.requested_deadspace = deadspace_ratio(instance.total_block_area, side)
 
 
 def theoretical_side_lower_bound(instance: Instance) -> tuple[int, dict[str, int]]:
     area_lb = math.ceil(math.sqrt(instance.total_block_area))
     block_lb = max(max(block.width, block.height) for block in instance.blocks)
-    terminal_lb = instance.terminal_coordinate_side
-    lower = max(area_lb, block_lb, terminal_lb)
+    lower = max(area_lb, block_lb)
     return lower, {
         "area_lower_bound": area_lb,
         "block_side_lower_bound": block_lb,
-        "terminal_coordinate_lower_bound": terminal_lb,
+        "terminal_coordinate_side": instance.terminal_coordinate_side,
     }
 
 
@@ -160,11 +163,16 @@ def find_minimum_feasible_side(instance: Instance, upper_side: int) -> Feasibili
         if packed is None:
             continue
         placements, method = packed
+        terminal_outside_count = sum(
+            terminal.x < 0 or terminal.y < 0 or terminal.x > side or terminal.y > side
+            for terminal in instance.terminals.values()
+        )
         return FeasibilityResult(
             chip=instance.chip,
             side=side,
             lower_bound_side=lower_side,
             lower_bound_attained=side == lower_side,
+            terminal_outside_count=terminal_outside_count,
             placements=placements,
             method=method,
             search_log=search_log,
@@ -182,6 +190,7 @@ def rectpack_layout_as_q2_layout(instance: Instance, placements: dict[str, Place
         placements=refined,
         hpwl=hpwl,
         side=instance.side,
+        outline_side=instance.outline_side,
         total_block_area=instance.total_block_area,
         requested_deadspace=instance.requested_deadspace,
         actual_deadspace_ratio=instance.actual_deadspace_ratio,
@@ -252,16 +261,19 @@ def write_summary(
         "total_block_area",
         "area_lower_bound",
         "block_side_lower_bound",
-        "terminal_coordinate_lower_bound",
+        "terminal_coordinate_side",
         "lower_bound_side",
         "min_feasible_side",
-        "lower_bound_attained",
+        "lower_bound_attained_by_search",
         "min_deadspace_ratio",
-        "q2_side_at_0_15",
+        "q2_grid_side_at_0_15",
+        "q2_outline_side_at_0_15",
         "q2_hpwl_at_0_15",
         "q3_hpwl_at_min_deadspace",
         "hpwl_change_vs_q2",
         "hpwl_change_ratio_vs_q2",
+        "terminal_outside_count",
+        "terminal_inside_sensitivity_side",
         "method",
         "refinement_method",
         "refine_passes",
@@ -278,7 +290,8 @@ def write_summary(
             lower_terms = first_log_by_chip[layout.chip]
             q2 = q2_rows.get(layout.chip, {})
             q2_hpwl = float(q2["hpwl"]) if q2.get("hpwl") else float("nan")
-            q2_side = q2.get("side", "")
+            q2_grid_side = q2.get("grid_side", q2.get("side", ""))
+            q2_outline_side = q2.get("outline_side", "")
             delta = layout.hpwl - q2_hpwl if q2.get("hpwl") else float("nan")
             ratio = delta / q2_hpwl if q2.get("hpwl") and q2_hpwl else float("nan")
             writer.writerow(
@@ -287,16 +300,19 @@ def write_summary(
                     "total_block_area": layout.total_block_area,
                     "area_lower_bound": lower_terms["area_lower_bound"],
                     "block_side_lower_bound": lower_terms["block_side_lower_bound"],
-                    "terminal_coordinate_lower_bound": lower_terms["terminal_coordinate_lower_bound"],
+                    "terminal_coordinate_side": lower_terms["terminal_coordinate_side"],
                     "lower_bound_side": feasibility.lower_bound_side,
                     "min_feasible_side": layout.side,
-                    "lower_bound_attained": feasibility.lower_bound_attained,
+                    "lower_bound_attained_by_search": feasibility.lower_bound_attained,
                     "min_deadspace_ratio": f"{layout.actual_deadspace_ratio:.8f}",
-                    "q2_side_at_0_15": q2_side,
+                    "q2_grid_side_at_0_15": q2_grid_side,
+                    "q2_outline_side_at_0_15": q2_outline_side,
                     "q2_hpwl_at_0_15": q2.get("hpwl", ""),
                     "q3_hpwl_at_min_deadspace": f"{layout.hpwl:.4f}",
                     "hpwl_change_vs_q2": "" if math.isnan(delta) else f"{delta:.4f}",
                     "hpwl_change_ratio_vs_q2": "" if math.isnan(ratio) else f"{ratio:.8f}",
+                    "terminal_outside_count": feasibility.terminal_outside_count,
+                    "terminal_inside_sensitivity_side": lower_terms["terminal_coordinate_side"],
                     "method": layout.method,
                     "refinement_method": layout.refinement_method,
                     "refine_passes": layout.improvement_passes,
@@ -315,7 +331,7 @@ def write_search_log(feasibility_results: list[FeasibilityResult], output_dir: P
         "side",
         "area_lower_bound",
         "block_side_lower_bound",
-        "terminal_coordinate_lower_bound",
+        "terminal_coordinate_side",
         "deadspace_ratio",
         "feasible",
         "method",
@@ -382,8 +398,8 @@ def solve_all(
         validation = validate_layout(hpwl_instance, layout)
         validation.update(terminal_bounds_report(hpwl_instance))
         validation["lower_bound_side"] = feasibility.lower_bound_side
-        validation["lower_bound_attained"] = feasibility.lower_bound_attained
-        validation["valid"] = validation["valid"] and validation["terminal_out_of_bounds_count"] == 0
+        validation["lower_bound_attained_by_search"] = feasibility.lower_bound_attained
+        validation["terminals_constrained"] = False
         if not validation["valid"]:
             raise RuntimeError(f"Invalid Q3 layout for {chip}: {validation}")
 
@@ -420,7 +436,7 @@ def main() -> None:
     parser.add_argument("--q2-summary", type=Path, default=Path("results") / "q2" / "q2_summary.csv")
     parser.add_argument("--refine-passes", type=int, default=2)
     parser.add_argument("--refine-top", type=int, default=3)
-    parser.add_argument("--refine-method", choices=["fast", "exact", "mixed"], default="fast")
+    parser.add_argument("--refine-method", choices=["fast", "exact", "mixed"], default="mixed")
     args = parser.parse_args()
     solve_all(
         args.data_dir,

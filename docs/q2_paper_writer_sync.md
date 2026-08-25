@@ -1,36 +1,37 @@
 # 第二问论文手同步文档：固定正方形轮廓下的 HPWL 优化
 
-> 任务状态：第二问已完成程序实现、三组芯片结果、布局图、候选对照表和可行性验证。  
-> 主程序：`src/q2_fixed_outline_hpwl.py`  
+> 任务状态：第二问已按队友修正意见部分更新，采用连续 fixed-outline 边长口径，并重新生成三组芯片结果、布局图、候选对照表和验证文件。
+> 主程序：`src/q2_fixed_outline_hpwl.py`
 > 主结果目录：`results/q2`
 
 ## 0. 写作总判断
 
-第二问是一个固定轮廓 VLSI floorplanning 问题。它不是预测、评价或统计拟合，而是带几何硬约束的组合优化问题：
+第二问是一个 fixed-outline hard-block floorplanning 问题。它不是预测、评价或统计拟合，而是带几何硬约束的组合优化问题：
 
 ```text
 输入：hard blocks 尺寸、netlist、terminal 固定坐标、dead_space_ratio=0.15
 决策：每个 block 的左下角坐标与是否旋转
 硬约束：所有 block 不重叠，且全部落在正方形芯片轮廓内
 目标：最小化所有 nets 的 HPWL 总和
-输出：每组芯片的布局坐标、总 HPWL、正方形边长、可视化和约束验证
+输出：每组芯片的布局坐标、总 HPWL、连续轮廓边长、整数坐标边界、可视化和约束验证
 ```
 
 论文中不能写“求得全局最优”。n100/n200/n300 均为大规模矩形非重叠布图，属于 NP-hard 组合优化。本文结果应表述为：
 
-> 在固定死区率 0.15 的正方形轮廓下，本文算法得到并验证了高质量可行布局；这些布局给出当前搜索预算下的 HPWL 可行上界。
+> 在死区率 0.15 的 fixed square outline 下，本文算法得到并验证了高质量可行布局；这些布局给出当前确定性候选池和局部搜索预算下的 HPWL 可行上界。
+
+本轮修正最重要的一点是：第二问的轮廓面积按题目死区率公式精确给出，轮廓边长可以是连续值；程序输出整数坐标，因此用 `floor(L_cont)` 作为整数坐标枚举边界。不要再写“边长上取整导致实际死区率略大于 0.15”。
 
 ## 1. 术语表
-
-论文中统一使用下列写法，不要混用：
 
 | 术语 | 建议写法 | 说明 |
 |---|---|---|
 | 半周长线长 | HPWL, half-perimeter wirelength | 第一次出现写全称，之后用 HPWL |
 | 硬模块 | hard block | `.blocks` 中的 block，尺寸固定，可旋转 |
 | 外部终端 | terminal | `.pl` 给定固定坐标，不参与面积与重叠 |
-| 固定轮廓 | fixed square outline | 第二问芯片为正方形 |
-| 死区率 | dead-space ratio | 本文采用 `Gamma=(A_outline-A_blocks)/A_blocks` |
+| 连续轮廓边长 | continuous outline side, \(L_{\mathrm{cont}}\) | 由死区率公式直接计算 |
+| 整数坐标边界 | integer grid side, \(G\) | 输出坐标为整数时使用的可枚举边界 |
+| 死区率 | dead-space ratio, \(\Gamma\) | \(\Gamma=(A_{\mathrm{outline}}-A_{\mathrm{blocks}})/A_{\mathrm{blocks}}\) |
 | 解析线长松弛 | quadratic wirelength relaxation | 用来得到 block 的目标中心 |
 | 合法化 | legalisation | 将连续目标位置转为无重叠、在边界内的矩形布局 |
 | 断点局部改进 | HPWL-breakpoint refinement | 大规模实例使用的快速局部搜索 |
@@ -49,39 +50,50 @@
 
 `.pl` 中 terminal 坐标被视为题目给定的固定外部连接端位置，程序不缩放 terminal 坐标。原因：
 
-1. 题面给出 `.pl` 的作用是提供 terminal 坐标；
+1. `.pl` 的作用是提供 terminal 坐标；
 2. 第二问改变的是 block 可摆放的正方形轮廓大小；
 3. 擅自缩放 terminal 会改变 netlist 的物理连接边界，属于额外假设。
 
 需要在论文“数据预处理”中注明：terminal 只参与 HPWL，不参与模块面积、不参与重叠约束。
 
+### 2.3 连续轮廓与整数坐标的关系
+
+第二问修正后采用如下口径：
+
+- 轮廓边长 \(L_{\mathrm{cont}}\) 是连续值，由 fixed-outline 公式直接计算；
+- 输出 block 坐标仍为整数；
+- 当 \(x_i,w_i\) 都是整数时，若 \(x_i+w_i\le L_{\mathrm{cont}}\)，则等价于 \(x_i+w_i\le \lfloor L_{\mathrm{cont}}\rfloor\)；
+- 因此程序内部使用 \(G=\lfloor L_{\mathrm{cont}}\rfloor\) 来枚举整数坐标，但论文中的轮廓面积仍写 \(L_{\mathrm{cont}}^2\)。
+
+这个处理同时满足题目死区率公式和附件整数坐标格式，不需要人为把轮廓边长向上取整。
+
 ## 3. 固定轮廓面积公式
 
-本文沿用题干理解文档和英文论文 fixed-outline 公式的死区率口径：
+本文沿用题干和 fixed-outline 文献中的死区率口径：
 
 \[
 \Gamma=\frac{A_{\mathrm{outline}}-A_{\mathrm{blocks}}}{A_{\mathrm{blocks}}},
 \qquad
-A_{\mathrm{outline}}\ge (1+\Gamma)A_{\mathrm{blocks}} .
+A_{\mathrm{outline}}=(1+\Gamma)A_{\mathrm{blocks}} .
 \]
 
 第二问固定为正方形，因此：
 
 \[
-L=\left\lceil \sqrt{(1+\Gamma)A_{\mathrm{blocks}}}\right\rceil,
+L_{\mathrm{cont}}=\sqrt{(1+\Gamma)A_{\mathrm{blocks}}},
 \qquad
-A_{\mathrm{outline}}=L^2 .
+G=\lfloor L_{\mathrm{cont}}\rfloor .
 \]
 
-由于边长取整数上取整，实际死区率会略大于 0.15。结果如下：
+其中 \(L_{\mathrm{cont}}\) 用于计算轮廓面积和死区率，\(G\) 用于整数坐标布局合法化。第二问 \(\Gamma=0.15\)，结果如下：
 
-| 芯片 | 模块总面积 \(A_{\mathrm{blocks}}\) | 边长 \(L\) | 轮廓面积 \(L^2\) | 实际死区率 |
-|---|---:|---:|---:|---:|
-| n100 | 179501 | 455 | 207025 | 0.15333619 |
-| n200 | 175696 | 450 | 202500 | 0.15255897 |
-| n300 | 273170 | 561 | 314721 | 0.15210675 |
+| 芯片 | 模块总面积 \(A_{\mathrm{blocks}}\) | 整数坐标边界 \(G\) | 连续轮廓边长 \(L_{\mathrm{cont}}\) | 轮廓面积 \(L_{\mathrm{cont}}^2\) | 实际死区率 |
+|---|---:|---:|---:|---:|---:|
+| n100 | 179501 | 454 | 454.341446492 | 206426.150000 | 0.15000000 |
+| n200 | 175696 | 449 | 449.500166852 | 202050.400000 | 0.15000000 |
+| n300 | 273170 | 560 | 560.486841951 | 314145.500000 | 0.15000000 |
 
-这里不要写“实际死区率等于 0.15”，应写“按 0.15 设定并取整数边长后，实际死区率分别为……”
+论文可以写“实际死区率为 0.15，浮点误差内一致”。不要写“边长上取整后实际死区率略大于 0.15”。
 
 ## 4. 数学模型
 
@@ -90,7 +102,7 @@ A_{\mathrm{outline}}=L^2 .
 对第 \(i\) 个 block：
 
 - \(r_i\in\{0,1\}\)：旋转变量，\(r_i=1\) 表示旋转 90 度；
-- \((x_i,y_i)\)：旋转后矩形左下角坐标；
+- \((x_i,y_i)\)：旋转后矩形左下角整数坐标；
 - 旋转后宽高为 \((w_i(r_i),h_i(r_i))\)。
 
 block 的 pin 位于几何中心：
@@ -103,9 +115,18 @@ terminal \(p\) 的坐标 \((X_p,Y_p)\) 由 `.pl` 给定。
 
 ### 4.2 不越界约束
 
+论文中可直接写连续边界约束：
+
 \[
 0\le x_i,\quad 0\le y_i,\quad
-x_i+w_i(r_i)\le L,\quad y_i+h_i(r_i)\le L.
+x_i+w_i(r_i)\le L_{\mathrm{cont}},\quad
+y_i+h_i(r_i)\le L_{\mathrm{cont}}.
+\]
+
+程序实现中，由于 \(x_i,y_i,w_i,h_i\) 为整数，实际检查等价于：
+
+\[
+x_i+w_i(r_i)\le G,\qquad y_i+h_i(r_i)\le G.
 \]
 
 ### 4.3 不重叠约束
@@ -144,17 +165,15 @@ subject to 上述边界约束和不重叠约束。
 
 ## 5. 候选模型比较
 
-这一段建议放在“问题分析”或“模型选择”中。
-
 | 方案 | 思路 | 优点 | 风险 | 本文处理 |
 |---|---|---|---|---|
 | A：MILP 精确模型 | 用 Big-M 表达不重叠，直接最小化 HPWL | 有理论全局最优框架 | 变量和析取约束约 \(O(n^2)\)，n300 很难求解 | 只作为理论基准，不作为主求解器 |
-| B：B*-tree + Fast-SA | 论文中的 fixed-outline floorplanning 框架 | 搜索表达紧凑，适合固定轮廓 | 实现与调参成本较高，参数不能照搬 | 迁移“轮廓可行性 + HPWL 搜索”的思想 |
+| B：B*-tree + Fast-SA | 英文论文中的 fixed-outline floorplanning 框架 | 搜索表达紧凑，适合固定轮廓 | 实现与调参成本高，参数不能照搬 | 迁移“轮廓可行性 + HPWL 搜索”的思想 |
 | C：解析线长松弛 + 合法化 + 局部改进 | 先求连续目标位置，再几何合法化 | 不用空间网格步长，复现稳定，能直接输出可行解 | 不能证明全局最优 | 作为第二问主方法 |
 
 英文论文可迁移内容：
 
-- fixed-outline 尺寸公式；
+- fixed-outline 尺寸公式和 dead-space ratio 口径；
 - 每个候选布局都要快速 packing 并显式检查边界；
 - 不能只用固定罚项，应把“找可行解”和“优化线长”分开处理；
 - 对大规模 floorplanning 只能谨慎称为高质量可行解。
@@ -166,8 +185,6 @@ subject to 上述边界约束和不重叠约束。
 - 论文表格里的 wirelength 数值不能作为本题答案。
 
 ## 6. 求解算法
-
-建议在“模型求解”中按下列 5 个模块写。
 
 ### 6.1 模块一：解析线长松弛
 
@@ -238,7 +255,7 @@ subject to 上述边界约束和不重叠约束。
 每个输出布局都做以下检查：
 
 1. block 名称无重复、无缺失；
-2. 所有 block 坐标非负且不超过 \(L\)；
+2. 所有 block 坐标非负且不超过连续轮廓边界；
 3. 任意两个 block 不重叠；
 4. 摆放面积之和等于 `.blocks` 总面积；
 5. 用输出坐标重新计算 HPWL，与 summary 中 HPWL 一致。
@@ -249,33 +266,33 @@ subject to 上述边界约束和不重叠约束。
 
 主结果表可直接放在论文“结果与分析”：
 
-| 芯片 | 边长 L | 实际死区率 | 总 HPWL | 初值 HPWL | refinement 后改善 | 主方法 | 局部改进 | 运行时间/s |
-|---|---:|---:|---:|---:|---:|---|---|---:|
-| n100 | 455 | 0.15333619 | 222139.5 | 225147.0 | 1.335794% | maxrects:degree_area+wire | exact_maxrect_reinsert | 52.71 |
-| n200 | 450 | 0.15255897 | 409845.0 | 411409.0 | 0.380157% | maxrects:target_yx+wire | fast_hpwl_breakpoint | 62.70 |
-| n300 | 561 | 0.15210675 | 565977.5 | 571290.0 | 0.929913% | maxrects:target_xy+wire | fast_hpwl_breakpoint | 120.55 |
+| 芯片 | \(L_{\mathrm{cont}}\) | \(G\) | 实际死区率 | 总 HPWL | 初值 HPWL | refinement 后改善 | 主方法 | 局部改进 | 运行时间/s |
+|---|---:|---:|---:|---:|---:|---:|---|---|---:|
+| n100 | 454.341 | 454 | 0.15000000 | 220279.0 | 224273.0 | 1.780865% | maxrects:degree_area+wire | exact_maxrect_reinsert | 48.17 |
+| n200 | 449.500 | 449 | 0.15000000 | 410072.5 | 411599.0 | 0.370871% | maxrects:target_yx+wire | fast_hpwl_breakpoint | 61.71 |
+| n300 | 560.487 | 560 | 0.15000000 | 560492.5 | 563981.0 | 0.618549% | maxrects:target_xy+wire | fast_hpwl_breakpoint | 121.61 |
 
 注意 HPWL 可能出现 `.5`，因为 block 中心坐标含半整数。
 
 ## 8. 候选对照与消融证据
 
-这张表建议放在“算法有效性分析”或附录中，证明不是只报告一次运行。
+这张表建议放在“算法有效性分析”或附录中，证明不是只报告一次运行。下表取每组芯片若干代表性可行候选，完整表在 `results/q2/q2_candidate_runs.csv`。
 
 | 芯片 | 候选方法 | 初值 HPWL | refinement 后 HPWL | 接受移动数 | refinement |
 |---|---|---:|---:|---:|---|
-| n100 | maxrects:degree_area+wire | 225147.0 | 222139.5 | 44 | exact_maxrect_reinsert |
-| n100 | maxrects:area_degree+wire | 225879.5 | 224419.0 | 35 | exact_maxrect_reinsert |
-| n100 | maxrects:area_degree+target | 242157.5 | 234921.5 | 34 | exact_maxrect_reinsert |
-| n200 | maxrects:target_yx+wire | 411409.0 | 409845.0 | 22 | fast_hpwl_breakpoint |
-| n200 | maxrects:degree_area+wire | 413289.0 | 412680.5 | 27 | fast_hpwl_breakpoint |
-| n200 | maxrects:area_degree+wire | 419002.0 | 417138.5 | 44 | fast_hpwl_breakpoint |
-| n300 | maxrects:target_xy+wire | 571290.0 | 565977.5 | 38 | fast_hpwl_breakpoint |
-| n300 | maxrects:target_yx+wire | 581871.5 | 574935.5 | 60 | fast_hpwl_breakpoint |
-| n300 | maxrects:degree_area+wire | 600378.5 | 599882.0 | 32 | fast_hpwl_breakpoint |
+| n100 | maxrects:degree_area+wire | 224273.0 | 220279.0 | 44 | exact_maxrect_reinsert |
+| n100 | shelf_bfd:native | 242944.0 | 233349.0 | 109 | exact_maxrect_reinsert |
+| n100 | maxrects:area_degree+target | 243190.5 | 234380.5 | 32 | exact_maxrect_reinsert |
+| n200 | maxrects:target_yx+wire | 411599.0 | 410072.5 | 20 | fast_hpwl_breakpoint |
+| n200 | maxrects:degree_area+wire | 413258.0 | 412640.5 | 27 | fast_hpwl_breakpoint |
+| n200 | maxrects:area_degree+wire | 420230.5 | 417335.0 | 47 | fast_hpwl_breakpoint |
+| n300 | maxrects:target_xy+wire | 563981.0 | 560492.5 | 34 | fast_hpwl_breakpoint |
+| n300 | maxrects:target_yx+wire | 582961.5 | 576107.0 | 59 | fast_hpwl_breakpoint |
+| n300 | maxrects:degree_area+wire | 600456.5 | 593534.5 | 47 | fast_hpwl_breakpoint |
 
 可解释结论：
 
-- `wire` 模式在三组主结果中均优于 `target/fit`，说明 HPWL 局部信息比单纯靠近解析目标更直接；
+- `wire` 模式在三组主结果中均表现较好，说明 HPWL 局部信息比单纯靠近解析目标更直接；
 - 解析目标排序在 n200/n300 中成为最优初值，说明随着规模增大，线长松弛对全局方向更有帮助；
 - refinement 均降低 HPWL，但幅度有限，说明初始合法化质量对最终结果影响较大。
 
@@ -299,9 +316,9 @@ subject to 上述边界约束和不重叠约束。
 
 建议放三张布局图，标题写成：
 
-- 图 1：n100 在死区率 0.15 下的固定正方形 HPWL 布局
-- 图 2：n200 在死区率 0.15 下的固定正方形 HPWL 布局
-- 图 3：n300 在死区率 0.15 下的固定正方形 HPWL 布局
+- 图 1：n100 在死区率 0.15 下的 fixed-outline HPWL 布局
+- 图 2：n200 在死区率 0.15 下的 fixed-outline HPWL 布局
+- 图 3：n300 在死区率 0.15 下的 fixed-outline HPWL 布局
 
 对应文件：
 
@@ -314,7 +331,7 @@ subject to 上述边界约束和不重叠约束。
 - 黑色点：`.pl` 给定 terminal；
 - 彩色矩形：hard blocks；
 - 淡红色框：HPWL 最大的若干 nets 的外接框，用于展示线长压力；
-- 外黑框：固定正方形芯片轮廓。
+- 外黑框：fixed square outline，边长为 \(L_{\mathrm{cont}}\)。
 
 ### 主文表
 
@@ -348,8 +365,8 @@ subject to 上述边界约束和不重叠约束。
 
 1. hard block 尺寸固定，允许 90 度旋转；
 2. block pin 位于模块几何中心；
-3. terminal 坐标由 `.pl` 固定，不随轮廓上取整缩放；
-4. dead-space ratio 以模块总面积为分母。
+3. terminal 坐标由 `.pl` 固定，不随轮廓变化缩放；
+4. dead-space ratio 以模块总面积为分母，轮廓边长按连续值计算。
 
 每条后面说明用途。不要写“忽略所有布线拥塞”，因为题目本来只要求 HPWL，不应把未建模内容写成现实假设。
 
@@ -358,8 +375,7 @@ subject to 上述边界约束和不重叠约束。
 至少包括：
 
 \[
-i,j:\text{模块索引};\quad e:\text{net 索引};\quad
-L:\text{正方形边长};\quad \Gamma:\text{死区率};
+i,j:\text{模块索引};\quad e:\text{net 索引};\quad L_{\mathrm{cont}}:\text{连续正方形边长};\quad G:\text{整数坐标边界};\quad \Gamma:\text{死区率};
 \]
 
 \[
@@ -376,7 +392,7 @@ x_i,y_i,r_i,w_i(r_i),h_i(r_i),c_i,\mathcal{P}_e,\operatorname{HPWL}(e).
 
 ```text
 读取 blocks/nets/pl
--> 计算 A_blocks 和 L
+-> 计算 A_blocks、L_cont 和 G
 -> 构建 net-block-terminal 图
 -> 解二次线长松弛，得到目标中心
 -> 多初值合法化
@@ -392,10 +408,10 @@ x_i,y_i,r_i,w_i(r_i),h_i(r_i),c_i,\mathcal{P}_e,\operatorname{HPWL}(e).
 Algorithm Q2 Fixed-outline HPWL Floorplanning
 Input: blocks, nets, terminal coordinates, Gamma=0.15
 Output: feasible placements and total HPWL
-1. Compute L=ceil(sqrt((1+Gamma) * total block area)).
+1. Compute L_cont=sqrt((1+Gamma) * total block area) and G=floor(L_cont).
 2. Build a weighted clique model for every net and solve the quadratic wirelength relaxation.
 3. Generate deterministic placement orders from degree, area and relaxed target coordinates.
-4. For each order and placement mode, legalise blocks inside the L by L square.
+4. For each order and placement mode, legalise blocks inside the G by G integer-coordinate square.
 5. Sort feasible candidates by HPWL and refine the best three candidates.
 6. Select the feasible layout with the smallest recomputed HPWL.
 7. Verify boundary, non-overlap, area conservation and HPWL consistency.
@@ -405,7 +421,7 @@ Output: feasible placements and total HPWL
 
 先放主结果表，再放图。文字不要复述每个 block 坐标，重点解释：
 
-- 三组都满足固定轮廓；
+- 三组都满足 fixed-outline 约束；
 - HPWL 随 net/pin 数和模块规模增大而增大；
 - n100 使用 exact 重插入得到更低 HPWL；
 - n200/n300 使用 fast 断点 refinement 在合理时间内获得可行优化结果。
@@ -425,7 +441,7 @@ Output: feasible placements and total HPWL
 不要写：
 
 - “本文求得全局最优解。”
-- “死区率严格等于 0.15。”
+- “边长上取整后实际死区率略大于 0.15。”
 - “terminal 被缩放到新边界。”
 - “B*-tree/Fast-SA 完全复现了英文论文算法。”
 - “该算法一定优于所有其他方法。”
@@ -433,7 +449,8 @@ Output: feasible placements and total HPWL
 推荐写：
 
 - “得到经完整约束校验的可行布局。”
-- “实际死区率因整数边长上取整略高于 0.15。”
+- “轮廓面积由 \((1+\Gamma)A_{\mathrm{blocks}}\) 给出，第二问死区率为 0.15。”
+- “整数坐标输出使用 \(G=\lfloor L_{\mathrm{cont}}\rfloor\) 进行合法化。”
 - “算法借鉴 fixed-outline floorplanning 的思想，但针对本题 HPWL 目标进行了解析松弛和合法化改造。”
 - “在当前候选池和局部搜索预算下取得的最小 HPWL 为……”
 
@@ -488,7 +505,6 @@ python src\q2_fixed_outline_hpwl.py --chips n100 --output-dir results\q2_n100_ch
 第三问会搜索最小可行死区率。第二问已经提供了可复用接口：
 
 - `--deadspace-ratio` 可改成任意候选 \(\Gamma\)；
-- 程序会自动计算对应 \(L\)；
+- 程序会自动计算对应 \(L_{\mathrm{cont}}\) 与 \(G\)；
 - `q2_validation.json` 可作为“该 \(\Gamma\) 下是否找到可行布局”的判据；
-- 但第三问不能把“单次失败”写成“不可行”，需要外层二分或枚举、多初值、多预算验证。
-
+- 第三问不能把“单次失败”写成“不可行证明”，需要明确这是在确定性 packing 搜索预算下得到的最小可行边长。

@@ -119,6 +119,7 @@ class Instance:
     terminals: dict[str, Terminal]
     nets: list[Net]
     side: int
+    outline_side: float
     requested_deadspace: float
     nets_by_block: list[list[int]]
     block_index: dict[str, int]
@@ -129,8 +130,8 @@ class Instance:
         return sum(block.area for block in self.blocks)
 
     @property
-    def outline_area(self) -> int:
-        return self.side * self.side
+    def outline_area(self) -> float:
+        return self.outline_side * self.outline_side
 
     @property
     def actual_deadspace_ratio(self) -> float:
@@ -143,6 +144,7 @@ class Layout:
     placements: dict[str, Placement]
     hpwl: float
     side: int
+    outline_side: float
     total_block_area: int
     requested_deadspace: float
     actual_deadspace_ratio: float
@@ -229,12 +231,16 @@ def read_instance(data_dir: Path, chip: str, deadspace_ratio: float) -> Instance
             elif pin not in terminals:
                 raise ValueError(f"{chip} net pin {pin} is neither block nor terminal")
     total_area = sum(block.area for block in blocks)
-    side = math.ceil(math.sqrt(total_area * (1.0 + deadspace_ratio)))
+    outline_side = math.sqrt(total_area * (1.0 + deadspace_ratio))
+    # The problem formula defines a continuous square outline. Placements use
+    # integer coordinates, so integer right/top edges must not exceed the exact
+    # continuous boundary.
+    side = math.floor(outline_side + 1e-12)
     terminal_side = math.ceil(max(max(t.x, t.y) for t in terminals.values())) if terminals else side
     max_block_side = max(max(block.width, block.height) for block in blocks)
     if max_block_side > side:
         raise ValueError(f"{chip} has a block side {max_block_side} larger than outline side {side}")
-    return Instance(chip, blocks, terminals, nets, side, deadspace_ratio, nets_by_block, block_index, terminal_side)
+    return Instance(chip, blocks, terminals, nets, side, outline_side, deadspace_ratio, nets_by_block, block_index, terminal_side)
 
 
 def orientation_options(block: Block, side: int) -> list[tuple[int, int]]:
@@ -1104,6 +1110,7 @@ def solve_instance(
         placements=best_placements,
         hpwl=hpwl,
         side=instance.side,
+        outline_side=instance.outline_side,
         total_block_area=instance.total_block_area,
         requested_deadspace=instance.requested_deadspace,
         actual_deadspace_ratio=instance.actual_deadspace_ratio,
@@ -1127,7 +1134,7 @@ def validate_layout(instance: Instance, layout: Layout) -> dict[str, object]:
     overlap_pairs: list[tuple[str, str]] = []
     ordered = [placements[name] for name in sorted(placements, key=natural_key)]
     for i, a in enumerate(ordered):
-        if a.x < 0 or a.y < 0 or a.x2 > instance.side or a.y2 > instance.side:
+        if a.x < 0 or a.y < 0 or a.x2 > instance.outline_side + 1e-9 or a.y2 > instance.outline_side + 1e-9:
             out_of_bounds.append(a.name)
         for b in ordered[i + 1 :]:
             if overlaps_rect(a, b):
@@ -1141,6 +1148,7 @@ def validate_layout(instance: Instance, layout: Layout) -> dict[str, object]:
         "num_nets": len(instance.nets),
         "num_pins": sum(len(net.pins) for net in instance.nets),
         "side": instance.side,
+        "outline_side": instance.outline_side,
         "outline_area": instance.outline_area,
         "total_block_area": instance.total_block_area,
         "requested_deadspace_ratio": instance.requested_deadspace,
@@ -1225,7 +1233,8 @@ def write_summary(layouts: list[Layout], path: Path) -> None:
                 "chip",
                 "num_blocks",
                 "total_block_area",
-                "side",
+                "grid_side",
+                "outline_side",
                 "outline_area",
                 "requested_deadspace_ratio",
                 "actual_deadspace_ratio",
@@ -1247,7 +1256,8 @@ def write_summary(layouts: list[Layout], path: Path) -> None:
                     len(layout.placements),
                     layout.total_block_area,
                     layout.side,
-                    layout.side * layout.side,
+                    f"{layout.outline_side:.9f}",
+                    f"{layout.outline_side * layout.outline_side:.6f}",
                     f"{layout.requested_deadspace:.6f}",
                     f"{layout.actual_deadspace_ratio:.8f}",
                     f"{layout.hpwl:.4f}",
@@ -1264,23 +1274,23 @@ def write_summary(layouts: list[Layout], path: Path) -> None:
 
 def write_svg(instance: Instance, layout: Layout, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    pad = max(24.0, instance.side * 0.035)
-    view = f"{-pad} {-pad} {instance.side + 2 * pad} {instance.side + 2 * pad}"
+    pad = max(24.0, instance.outline_side * 0.035)
+    view = f"{-pad} {-pad} {instance.outline_side + 2 * pad} {instance.outline_side + 2 * pad}"
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{view}">',
-        f'<rect x="0" y="0" width="{instance.side}" height="{instance.side}" fill="white" stroke="#111" stroke-width="2"/>',
+        f'<rect x="0" y="0" width="{instance.outline_side}" height="{instance.outline_side}" fill="white" stroke="#111" stroke-width="2"/>',
     ]
     for terminal in instance.terminals.values():
-        y_svg = instance.side - terminal.y
+        y_svg = instance.outline_side - terminal.y
         parts.append(f'<circle cx="{terminal.x:.2f}" cy="{y_svg:.2f}" r="1.2" fill="#111" opacity="0.75"/>')
     for hpwl, x1, y1, x2, y2 in top_net_boxes(instance, layout.placements):
         parts.append(
-            f'<rect x="{x1:.2f}" y="{instance.side - y2:.2f}" width="{x2 - x1:.2f}" height="{y2 - y1:.2f}" '
+            f'<rect x="{x1:.2f}" y="{instance.outline_side - y2:.2f}" width="{x2 - x1:.2f}" height="{y2 - y1:.2f}" '
             f'fill="none" stroke="#d94841" stroke-width="0.6" opacity="0.32"/>'
         )
     for p in sorted(layout.placements.values(), key=lambda item: natural_key(item.name)):
         r, g, b = color_for_name(p.name)
-        y_svg = instance.side - p.y - p.height
+        y_svg = instance.outline_side - p.y - p.height
         parts.append(
             f'<rect x="{p.x}" y="{y_svg}" width="{p.width}" height="{p.height}" '
             f'fill="rgb({r},{g},{b})" fill-opacity="0.72" stroke="#222" stroke-width="0.45"/>'
@@ -1292,7 +1302,8 @@ def write_svg(instance: Instance, layout: Layout, path: Path) -> None:
             )
     parts.append(
         f'<text x="0" y="{-pad / 2:.2f}" font-size="12" fill="#111">'
-        f'{layout.chip}: L={instance.side}, HPWL={layout.hpwl:.2f}, deadspace={layout.actual_deadspace_ratio:.4f}</text>'
+        f'{layout.chip}: L={layout.outline_side:.3f}, grid={layout.side}, '
+        f'HPWL={layout.hpwl:.2f}, deadspace={layout.actual_deadspace_ratio:.4f}</text>'
     )
     parts.append("</svg>")
     path.write_text("\n".join(parts), encoding="utf-8")
@@ -1304,13 +1315,13 @@ def write_png(instance: Instance, layout: Layout, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     max_pixels = 1800
     margin = 70
-    scale = (max_pixels - 2 * margin) / instance.side
-    image_size = int(instance.side * scale + 2 * margin)
+    scale = (max_pixels - 2 * margin) / instance.outline_side
+    image_size = int(instance.outline_side * scale + 2 * margin)
     image = Image.new("RGB", (image_size, image_size), "white")
     draw = ImageDraw.Draw(image, "RGBA")
     font = ImageFont.load_default()
     draw.rectangle(
-        [margin, margin, margin + instance.side * scale, margin + instance.side * scale],
+        [margin, margin, margin + instance.outline_side * scale, margin + instance.outline_side * scale],
         outline=(20, 20, 20, 255),
         width=2,
     )
@@ -1318,9 +1329,9 @@ def write_png(instance: Instance, layout: Layout, path: Path) -> None:
         draw.rectangle(
             [
                 margin + x1 * scale,
-                margin + (instance.side - y2) * scale,
+                margin + (instance.outline_side - y2) * scale,
                 margin + x2 * scale,
-                margin + (instance.side - y1) * scale,
+                margin + (instance.outline_side - y1) * scale,
             ],
             outline=(217, 72, 65, 90),
             width=1,
@@ -1328,17 +1339,20 @@ def write_png(instance: Instance, layout: Layout, path: Path) -> None:
     for p in sorted(layout.placements.values(), key=lambda item: natural_key(item.name)):
         r, g, b = color_for_name(p.name)
         x1 = margin + p.x * scale
-        y1 = margin + (instance.side - p.y - p.height) * scale
+        y1 = margin + (instance.outline_side - p.y - p.height) * scale
         x2 = margin + p.x2 * scale
-        y2 = margin + (instance.side - p.y) * scale
+        y2 = margin + (instance.outline_side - p.y) * scale
         draw.rectangle([x1, y1, x2, y2], fill=(r, g, b, 184), outline=(25, 25, 25, 255), width=1)
         if len(layout.placements) <= 130 and min(p.width * scale, p.height * scale) >= 15:
             draw.text(((x1 + x2) / 2, (y1 + y2) / 2), p.name, fill=(0, 0, 0, 255), anchor="mm", font=font)
     for terminal in instance.terminals.values():
         x = margin + terminal.x * scale
-        y = margin + (instance.side - terminal.y) * scale
+        y = margin + (instance.outline_side - terminal.y) * scale
         draw.ellipse([x - 2, y - 2, x + 2, y + 2], fill=(20, 20, 20, 190))
-    title = f"{layout.chip}: L={instance.side}, HPWL={layout.hpwl:.2f}, deadspace={layout.actual_deadspace_ratio:.4f}"
+    title = (
+        f"{layout.chip}: L={layout.outline_side:.3f}, grid={layout.side}, "
+        f"HPWL={layout.hpwl:.2f}, deadspace={layout.actual_deadspace_ratio:.4f}"
+    )
     draw.text((margin, 22), title, fill=(0, 0, 0, 255), font=font)
     image.save(path)
 
@@ -1375,7 +1389,7 @@ def solve_all(
         write_svg(instance, layout, output_dir / "figures" / f"{chip}_q2_layout.svg")
         write_png(instance, layout, output_dir / "figures" / f"{chip}_q2_layout.png")
         print(
-            f"{chip}: L={layout.side}, hpwl={layout.hpwl:.2f}, "
+            f"{chip}: L={layout.outline_side:.3f} (grid {layout.side}), hpwl={layout.hpwl:.2f}, "
             f"deadspace={layout.actual_deadspace_ratio:.4%}, method={layout.method}, "
             f"time={layout.runtime_sec:.2f}s",
             flush=True,

@@ -1,4 +1,4 @@
-chip,total_block_area,area_lower_bound,block_side_lower_bound,terminal_coordinate_lower_bound,lower_bound_side,min_feasible_side,lower_bound_attained,min_deadspace_ratio,q2_side_at_0_15,q2_hpwl_at_0_15,q3_hpwl_at_min_deadspace,hpwl_change_vs_q2,hpwl_change_ratio_vs_q2,method,refinement_method,refine_passes,accepted_moves,runtime_sec
-n100,179501,424,67,444,444,444,True,0.09824458,455,222139.5000,235824.5000,13685.0000,0.06160543,shelf_bfd:native,fast_hpwl_breakpoint,2,54,15.7717
-n200,175696,420,48,438,438,438,True,0.09190875,450,409845.0000,433383.0000,23538.0000,0.05743147,shelf_bfd:narrow,fast_hpwl_breakpoint,2,112,59.0500
-n300,273170,523,48,548,548,548,True,0.09933009,561,565977.5000,613636.5000,47659.0000,0.08420653,shelf_bfd:wide,fast_hpwl_breakpoint,2,107,109.4258
+chip,total_block_area,area_lower_bound,block_side_lower_bound,terminal_coordinate_side,lower_bound_side,min_feasible_side,lower_bound_attained_by_search,min_deadspace_ratio,q2_grid_side_at_0_15,q2_outline_side_at_0_15,q2_hpwl_at_0_15,q3_hpwl_at_min_deadspace,hpwl_change_vs_q2,hpwl_change_ratio_vs_q2,terminal_outside_count,terminal_inside_sensitivity_side,method,refinement_method,refine_passes,accepted_moves,runtime_sec
+n100,179501,424,67,444,424,439,False,0.07364861,454,454.341446492,220279.0000,239551.0000,19272.0000,0.08748905,168,444,shelf_bfd:wide,exact_maxrect_reinsert,2,89,16.4028
+n200,175696,420,48,438,420,432,False,0.06219834,449,449.500166852,410072.5000,442024.0000,31951.5000,0.07791671,284,438,shelf_bfd:narrow,fast_hpwl_breakpoint,2,81,47.4676
+n300,273170,523,48,548,523,537,False,0.05563935,560,560.486841951,560492.5000,640695.5000,80203.0000,0.14309380,290,548,shelf_bfd:narrow,fast_hpwl_breakpoint,2,69,72.8439
