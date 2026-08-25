@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 536 392">
+<rect width="100%" height="100%" fill="white"/>
+<line x1="52" y1="52" x2="52" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="124" y1="52" x2="124" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="196" y1="52" x2="196" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="268" y1="52" x2="268" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="340" y1="52" x2="340" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="412" y1="52" x2="412" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="484" y1="52" x2="484" y2="340" stroke="#ddd" stroke-width="1"/>
+<line x1="52" y1="52" x2="484" y2="52" stroke="#ddd" stroke-width="1"/>
+<line x1="52" y1="124" x2="484" y2="124" stroke="#ddd" stroke-width="1"/>
+<line x1="52" y1="196" x2="484" y2="196" stroke="#ddd" stroke-width="1"/>
+<line x1="52" y1="268" x2="484" y2="268" stroke="#ddd" stroke-width="1"/>
+<line x1="52" y1="340" x2="484" y2="340" stroke="#ddd" stroke-width="1"/>
+<rect x="52" y="52" width="432" height="288" fill="none" stroke="#111" stroke-width="3"/>
+<rect x="124" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="196" y="196" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="340" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="268" y="196" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="196" y="268" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="340" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="268" y="268" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="196" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="268" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="196" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="268" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<rect x="124" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
+<text x="268.00" y="172.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b1</text>
+<rect x="52" y="196" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
+<rect x="52" y="268" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
+<rect x="124" y="196" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
+<rect x="52" y="52" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
+<rect x="52" y="124" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
+<rect x="124" y="268" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
+<text x="112.00" y="220.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b2</text>
+<rect x="340" y="268" width="72" height="72" fill="rgb(130,190,140)" stroke="white" stroke-width="2"/>
+<rect x="340" y="196" width="72" height="72" fill="rgb(130,190,140)" stroke="white" stroke-width="2"/>
+<text x="376.00" y="268.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b3</text>
+<rect x="412" y="52" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
+<rect x="412" y="268" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
+<rect x="412" y="196" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
+<rect x="412" y="124" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
+<text x="448.00" y="196.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b4</text>
+<text x="52" y="26.0" font-size="16" font-family="Arial" fill="#111">Q4 optimum: 6 x 4, area=24</text>
+</svg>
