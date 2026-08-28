@@ -385,10 +385,10 @@ def write_grid_txt(result: SearchResult, path: Path) -> None:
 
 def color_for(name: str) -> tuple[int, int, int]:
     palette = {
-        "b1": (123, 174, 214),
-        "b2": (230, 172, 98),
-        "b3": (130, 190, 140),
-        "b4": (205, 126, 135),
+        "b1": (142, 171, 194),  # muted blue
+        "b2": (211, 177, 123),  # muted ochre
+        "b3": (148, 184, 157),  # muted sage
+        "b4": (190, 145, 151),  # muted rose
     }
     return palette[name]
 
@@ -396,42 +396,64 @@ def color_for(name: str) -> tuple[int, int, int]:
 def write_svg(result: SearchResult, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     scale = 72
-    margin = 52
-    width_px = result.width * scale + 2 * margin
-    height_px = result.height * scale + 2 * margin
+    margin_left, margin_right, margin_top, margin_bottom = 76, 42, 60, 68
+    width_px = result.width * scale + margin_left + margin_right
+    height_px = result.height * scale + margin_top + margin_bottom
+    plot_left, plot_top = margin_left, margin_top
+    plot_right = plot_left + result.width * scale
+    plot_bottom = plot_top + result.height * scale
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width_px} {height_px}">',
         '<rect width="100%" height="100%" fill="white"/>',
     ]
     for gx in range(result.width + 1):
-        x = margin + gx * scale
-        parts.append(f'<line x1="{x}" y1="{margin}" x2="{x}" y2="{height_px - margin}" stroke="#ddd" stroke-width="1"/>')
+        x = plot_left + gx * scale
+        parts.append(f'<line x1="{x}" y1="{plot_top}" x2="{x}" y2="{plot_bottom}" stroke="#e7e7e7" stroke-width="1"/>')
     for gy in range(result.height + 1):
-        y = margin + gy * scale
-        parts.append(f'<line x1="{margin}" y1="{y}" x2="{width_px - margin}" y2="{y}" stroke="#ddd" stroke-width="1"/>')
-    parts.append(
-        f'<rect x="{margin}" y="{margin}" width="{result.width * scale}" height="{result.height * scale}" '
-        'fill="none" stroke="#111" stroke-width="3"/>'
-    )
+        y = plot_top + gy * scale
+        parts.append(f'<line x1="{plot_left}" y1="{y}" x2="{plot_right}" y2="{y}" stroke="#e7e7e7" stroke-width="1"/>')
     for placement in result.placements:
         r, g, b = color_for(placement.name)
         for x, y in placement.cells:
-            px = margin + x * scale
-            py = margin + (result.height - y - 1) * scale
+            px = plot_left + x * scale
+            py = plot_top + (result.height - y - 1) * scale
             parts.append(
                 f'<rect x="{px}" y="{py}" width="{scale}" height="{scale}" '
-                f'fill="rgb({r},{g},{b})" stroke="white" stroke-width="2"/>'
+                f'fill="rgb({r},{g},{b})" stroke="white" stroke-width="1.5"/>'
             )
-        cx = margin + (sum(x + 0.5 for x, _ in placement.cells) / placement.area) * scale
-        cy = margin + (result.height - sum(y + 0.5 for _, y in placement.cells) / placement.area) * scale
+        cx = plot_left + (sum(x + 0.5 for x, _ in placement.cells) / placement.area) * scale
+        cy = plot_top + (result.height - sum(y + 0.5 for _, y in placement.cells) / placement.area) * scale
         parts.append(
             f'<text x="{cx:.2f}" y="{cy:.2f}" text-anchor="middle" dominant-baseline="middle" '
-            'font-size="18" font-family="Arial" font-weight="700" fill="#111">'
+            'font-size="19" font-family="Arial" font-weight="700" fill="#1f2529">'
             f'{placement.name}</text>'
         )
+    bbox_x = plot_left + scale
+    bbox_w = 4 * scale
     parts.append(
-        f'<text x="{margin}" y="{margin / 2}" font-size="16" font-family="Arial" fill="#111">'
-        f'Q4 optimum: {result.width} x {result.height}, area={result.outline_area}</text>'
+        f'<rect x="{bbox_x + 2}" y="{plot_top + 2}" width="{bbox_w - 4}" height="{result.height * scale - 4}" '
+        'fill="none" stroke="#45545f" stroke-width="2.5" stroke-dasharray="9,7"/>'
+    )
+    parts.append(
+        f'<rect x="{plot_left}" y="{plot_top}" width="{result.width * scale}" height="{result.height * scale}" '
+        'fill="none" stroke="#171717" stroke-width="4"/>'
+    )
+    parts.append(
+        f'<text x="{bbox_x + bbox_w / 2}" y="28" text-anchor="middle" '
+        'font-size="15" font-family="Microsoft YaHei,Arial" fill="#45545f">b1 矩形外接框（虚线）</text>'
+    )
+    dim_y = plot_bottom + 37
+    parts.extend(
+        [
+            f'<line x1="{plot_left}" y1="{dim_y}" x2="{plot_right}" y2="{dim_y}" stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>',
+            f'<text x="{(plot_left + plot_right) / 2}" y="{dim_y - 7}" text-anchor="middle" font-size="16" font-family="Arial" fill="#222">6</text>',
+            f'<line x1="{plot_left - 36}" y1="{plot_top}" x2="{plot_left - 36}" y2="{plot_bottom}" stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>',
+            f'<text x="{plot_left - 48}" y="{(plot_top + plot_bottom) / 2}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-family="Arial" fill="#222">4</text>',
+        ]
+    )
+    parts.insert(
+        2,
+        '<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L7,3.5 L0,7 z" fill="#333"/></marker></defs>',
     )
     parts.append("</svg>")
     path.write_text("\n".join(parts), encoding="utf-8")
@@ -441,36 +463,90 @@ def write_png(result: SearchResult, path: Path) -> None:
     if Image is None or ImageDraw is None:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
-    scale = 110
-    margin = 70
-    width_px = result.width * scale + 2 * margin
-    height_px = result.height * scale + 2 * margin
+    scale = 108
+    margin_left, margin_right, margin_top, margin_bottom = 112, 64, 88, 104
+    width_px = result.width * scale + margin_left + margin_right
+    height_px = result.height * scale + margin_top + margin_bottom
+    plot_left, plot_top = margin_left, margin_top
+    plot_right = plot_left + result.width * scale
+    plot_bottom = plot_top + result.height * scale
     image = Image.new("RGB", (width_px, height_px), "white")
     draw = ImageDraw.Draw(image)
     try:
-        font = ImageFont.truetype("arial.ttf", 22) if ImageFont else None
-        title_font = ImageFont.truetype("arial.ttf", 18) if ImageFont else None
+        label_font = ImageFont.truetype("arialbd.ttf", 26) if ImageFont else None
+        dim_font = ImageFont.truetype("arial.ttf", 21) if ImageFont else None
+        note_font = ImageFont.truetype("C:/Windows/Fonts/msyh.ttc", 20) if ImageFont else None
     except Exception:
-        font = None
-        title_font = None
+        label_font = None
+        dim_font = None
+        note_font = None
     for gx in range(result.width + 1):
-        x = margin + gx * scale
-        draw.line([(x, margin), (x, height_px - margin)], fill=(220, 220, 220), width=1)
+        x = plot_left + gx * scale
+        draw.line([(x, plot_top), (x, plot_bottom)], fill=(232, 232, 232), width=1)
     for gy in range(result.height + 1):
-        y = margin + gy * scale
-        draw.line([(margin, y), (width_px - margin, y)], fill=(220, 220, 220), width=1)
-    draw.rectangle([margin, margin, width_px - margin, height_px - margin], outline=(15, 15, 15), width=3)
+        y = plot_top + gy * scale
+        draw.line([(plot_left, y), (plot_right, y)], fill=(232, 232, 232), width=1)
     for placement in result.placements:
         for x, y in placement.cells:
-            px = margin + x * scale
-            py = margin + (result.height - y - 1) * scale
+            px = plot_left + x * scale
+            py = plot_top + (result.height - y - 1) * scale
             draw.rectangle([px, py, px + scale, py + scale], fill=color_for(placement.name), outline=(255, 255, 255), width=2)
-        cx = margin + (sum(x + 0.5 for x, _ in placement.cells) / placement.area) * scale
-        cy = margin + (result.height - sum(y + 0.5 for _, y in placement.cells) / placement.area) * scale
+        cx = plot_left + (sum(x + 0.5 for x, _ in placement.cells) / placement.area) * scale
+        cy = plot_top + (result.height - sum(y + 0.5 for _, y in placement.cells) / placement.area) * scale
         text = placement.name
-        bbox = draw.textbbox((0, 0), text, font=font)
-        draw.text((cx - (bbox[2] - bbox[0]) / 2, cy - (bbox[3] - bbox[1]) / 2), text, fill=(0, 0, 0), font=font)
-    draw.text((margin, 24), f"Q4 optimum: {result.width} x {result.height}, area={result.outline_area}", fill=(0, 0, 0), font=title_font)
+        bbox = draw.textbbox((0, 0), text, font=label_font)
+        draw.text(
+            (cx - (bbox[2] - bbox[0]) / 2, cy - (bbox[3] - bbox[1]) / 2),
+            text,
+            fill=(28, 34, 38),
+            font=label_font,
+        )
+
+    def dashed_line(points: tuple[tuple[int, int], tuple[int, int]], fill: tuple[int, int, int], width: int = 3) -> None:
+        (x1, y1), (x2, y2) = points
+        length = int(math.hypot(x2 - x1, y2 - y1))
+        if length == 0:
+            return
+        ux, uy = (x2 - x1) / length, (y2 - y1) / length
+        for start in range(0, length, 18):
+            end = min(start + 10, length)
+            draw.line(
+                [(x1 + ux * start, y1 + uy * start), (x1 + ux * end, y1 + uy * end)],
+                fill=fill,
+                width=width,
+            )
+
+    bbox_left = plot_left + scale + 3
+    bbox_right = plot_left + 5 * scale - 3
+    bbox_top, bbox_bottom = plot_top + 3, plot_bottom - 3
+    dash_color = (69, 84, 95)
+    dashed_line(((bbox_left, bbox_top), (bbox_right, bbox_top)), dash_color)
+    dashed_line(((bbox_right, bbox_top), (bbox_right, bbox_bottom)), dash_color)
+    dashed_line(((bbox_right, bbox_bottom), (bbox_left, bbox_bottom)), dash_color)
+    dashed_line(((bbox_left, bbox_bottom), (bbox_left, bbox_top)), dash_color)
+    draw.rectangle([plot_left, plot_top, plot_right, plot_bottom], outline=(20, 20, 20), width=5)
+
+    note = "b1 矩形外接框（虚线）"
+    note_bbox = draw.textbbox((0, 0), note, font=note_font)
+    note_x = plot_left + 3 * scale - (note_bbox[2] - note_bbox[0]) / 2
+    draw.text((note_x, 28), note, fill=dash_color, font=note_font)
+
+    arrow_color = (45, 45, 45)
+    dim_y = plot_bottom + 51
+    draw.line([(plot_left, dim_y), (plot_right, dim_y)], fill=arrow_color, width=2)
+    draw.polygon([(plot_left, dim_y), (plot_left + 11, dim_y - 6), (plot_left + 11, dim_y + 6)], fill=arrow_color)
+    draw.polygon([(plot_right, dim_y), (plot_right - 11, dim_y - 6), (plot_right - 11, dim_y + 6)], fill=arrow_color)
+    dim6 = "6"
+    dim6_bbox = draw.textbbox((0, 0), dim6, font=dim_font)
+    draw.text(((plot_left + plot_right) / 2 - (dim6_bbox[2] - dim6_bbox[0]) / 2, dim_y + 7), dim6, fill=arrow_color, font=dim_font)
+
+    dim_x = plot_left - 55
+    draw.line([(dim_x, plot_top), (dim_x, plot_bottom)], fill=arrow_color, width=2)
+    draw.polygon([(dim_x, plot_top), (dim_x - 6, plot_top + 11), (dim_x + 6, plot_top + 11)], fill=arrow_color)
+    draw.polygon([(dim_x, plot_bottom), (dim_x - 6, plot_bottom - 11), (dim_x + 6, plot_bottom - 11)], fill=arrow_color)
+    dim4 = "4"
+    dim4_bbox = draw.textbbox((0, 0), dim4, font=dim_font)
+    draw.text((dim_x - 27, (plot_top + plot_bottom) / 2 - (dim4_bbox[3] - dim4_bbox[1]) / 2), dim4, fill=arrow_color, font=dim_font)
     image.save(path)
 
 

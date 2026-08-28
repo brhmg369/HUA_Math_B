@@ -1,0 +1,93 @@
+% !TEX program = xelatex
+% 华数杯数学建模竞赛论文骨架。
+% 依据 format2024.doc：电子版从摘要专用页开始，摘要页计为第 1 页；
+% 正文紧随其后，不设置纸质承诺书、编号专用页或正文目录。
+\documentclass[fontset=windows,a4paper]{ctexart}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,array,longtable}
+\usepackage{graphicx,float}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[unicode]{hyperref}
+
+% 严格复刻 CUMCM-2025B 优秀范文的正文密度：使用 ctexart 默认字号和默认基线，
+% 不额外设置 12pt、\linespread 或西文字体覆盖。
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% 图表标题、页眉页脚与优秀范文保持一致。
+\captionsetup{labelsep=space,font=small,justification=centering}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+}
+
+\begin{document}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ==================== 摘要专用页 ====================
+\begin{center}
+  \vspace*{0.2cm}
+  {\Large\bfseries VLSI 布图规划的几何建模与优化求解}
+  \vspace*{1cm}
+
+  {\Large\bfseries 摘\quad 要}
+\end{center}
+\thispagestyle{fancy}
+
+本文针对超大规模集成电路硬模块的布图规划问题，建立了统一描述模块旋转、几何非重叠、芯片轮廓与互连线长的分层组合优化模型。我们分别面向自由轮廓面积优化、固定轮廓线长优化、死区率压缩和非矩形模块推广，设计了矩形装箱构造、目标引导合法化、整数边长搜索与形状级精确枚举算法。通过对三组规模化网表和非矩形算例进行求解与约束复核，我们成功得到各阶段的可行布局、轮廓参数及线长结果，并基于结果揭示了轮廓面积、布局形状与互连线长之间的制约关系，以及形状级建模对利用非矩形模块凹槽空间的作用。
+
+\noindent\textbf{针对问题一、}为最小化允许 $90^\circ$ 旋转的硬模块自由轮廓面积，我们建立了\textbf{可旋转二维矩形装箱模型}，以外接面积最小为主目标，并在同面积时进一步优化轮廓长短边比。针对轮廓尺度未知且组合空间庞大的问题，以候选短边搜索轮廓尺寸，并结合\textbf{Skyline 与 MaxRects}构造布局。\texttt{n100}、\texttt{n200}、\texttt{n300} 三组算例的外接面积分别为 $185330$、$180900$、$289640$；前两组面积冗余率仅为\textbf{3.2473\%、2.9619\%}，但长短边比达到 $25.0581$、$50.2500$，第三组冗余率为 $6.0292\%$、长短边比则降至 $1.0712$，表明自由轮廓下\textbf{面积紧凑性与轮廓均衡性存在竞争关系}。
+
+\noindent\textbf{针对问题二、}在死区率为 $0.15$ 的固定正方形轮廓内，以总半周长线长（HPWL）最小为目标，建立同时考虑模块旋转、边界约束与非重叠约束的布局优化模型。针对离散几何约束与网络线长耦合导致直接联合搜索困难的问题，首先暂时忽略非重叠约束，以\textbf{二次线长松弛}求得模块的网络驱动目标位置；随后采用\textbf{目标引导合法化与局部重插入}：结合目标位置与局部网络信息完成几何合法化，并通过多组模块顺序与插入策略构造候选布局，以降低单一初值的影响；最后针对合法化造成的线长损失，对高线长贡献模块进行局部重插入，在保持布局可行的前提下进一步优化 HPWL。三组实例所得总 HPWL 分别为\textbf{220279.0、410072.5 和 560492.5}；局部重插入使三组实例 HPWL 均进一步下降，不同初始合法化布局仍表现出明显结果差异，表明初始空间结构对最终线长具有持续影响。
+
+\noindent\textbf{针对问题三、}为进一步压缩芯片死区率，我们将其转化为正方形轮廓整数边长的外层搜索问题，并采用“先压缩轮廓、再优化线长”的词典序目标。首先依据模块总面积与最大模块边长确定搜索下界，结合多种 MaxRects 放置规则逐步搜索可行轮廓；随后在所得首个可行边长下沿用问题二的网络驱动合法化与局部重插入方法，对总 HPWL 进行优化。三组实例得到的首个可行边长分别为 $439$、$432$ 和 $537$，对应死区率分别降至\textbf{7.3649\%、6.2198\% 和 5.5639\%}，总 HPWL 较问题二分别增加 $8.75\%$、$7.79\%$ 和 $14.31\%$。结果表明，轮廓压缩会限制模块围绕网络目标位置调整的空间，从而体现出死区率与互连线长之间的权衡关系。
+
+\noindent\textbf{针对问题四、}为解决矩形外接框错误占用 L 型、T 型模块凹槽空间的问题，我们将模块表示为真实占用区域集合，并以集合不交建立\textbf{形状级非重叠约束}；鉴于实例仅含四个模块，采用回溯方法完整枚举四向旋转状态与整数位置。在题面尺寸解释下，枚举构造出 $6\times4$ 的零死区布局，其轮廓面积 $24$ 恰好达到模块总面积理论下界，因而由“\textbf{理论下界 + 可行构造}”严格证明该布局全局最优。
+
+综上所述：本文形成了从自由轮廓几何装箱、固定轮廓线长优化到死区率压缩与非矩形模块推广的统一布局优化框架。数值结果表明，轮廓压缩与互连线长之间存在明确的权衡关系，形状级建模则能够有效利用非矩形模块的凹槽空间，为 VLSI 硬模块布图规划提供了可复现、可验证的建模与求解方案。
+
+\vspace{1cm}
+\noindent{\bfseries 关键词：}VLSI 布图规划；固定轮廓；HPWL；死区率；形状级装箱
+
+\newpage
+
+% format2024.doc 明确要求正文“不要目录”，因此不调用 \tableofcontents。
+% hyperref 仍会根据下列章节生成 PDF 书签，便于电子阅读与导航。
+\input{sections/1_restatement}
+\input{sections/2_analysis}
+\input{sections/3_assumptions}
+\input{sections/4_symbols}
+\input{sections/5_problem1}
+\input{sections/6_problem2}
+\input{sections/7_problem3}
+\input{sections/8_problem4}
+\input{sections/9_sensitivity}
+\input{sections/10_evaluation}
+
+\clearpage
+\input{references}
+
+\clearpage
+\input{sections/A_supporting_materials}
+\input{sections/B_code}
+
+\end{document}

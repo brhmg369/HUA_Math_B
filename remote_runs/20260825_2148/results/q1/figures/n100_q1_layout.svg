@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-53.1 -53.1 192.2 2261.2">
+<rect x="0" y="0" width="86" height="2155" fill="white" stroke="#111" stroke-width="2"/>
+<rect x="53" y="385" width="33" height="43" fill="rgb(147,216,132)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="69.50" y="406.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b0</text>
+<rect x="0" y="1582" width="65" height="37" fill="rgb(206,211,142)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.50" y="1600.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b1</text>
+<rect x="0" y="351" width="53" height="34" fill="rgb(130,182,82)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="26.50" y="368.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b2</text>
+<rect x="0" y="1957" width="67" height="37" fill="rgb(115,105,193)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.50" y="1975.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b3</text>
+<rect x="56" y="604" width="19" height="29" fill="rgb(106,142,103)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="65.50" y="618.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b4</text>
+<rect x="0" y="140" width="49" height="39" fill="rgb(131,117,194)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="24.50" y="159.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b5</text>
+<rect x="65" y="1503" width="18" height="40" fill="rgb(87,105,150)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="74.00" y="1523.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b6</text>
+<rect x="42" y="32" width="40" height="22" fill="rgb(148,115,140)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="62.00" y="43.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b7</text>
+<rect x="0" y="1241" width="62" height="50" fill="rgb(126,145,134)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="31.00" y="1266.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b8</text>
+<rect x="60" y="1065" width="16" height="41" fill="rgb(195,109,146)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="68.00" y="1085.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b9</text>
+<rect x="66" y="1733" width="18" height="52" fill="rgb(110,204,181)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.00" y="1759.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b10</text>
+<rect x="0" y="933" width="59" height="39" fill="rgb(165,82,85)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="29.50" y="952.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b11</text>
+<rect x="0" y="1106" width="61" height="28" fill="rgb(201,127,84)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="30.50" y="1120.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b12</text>
+<rect x="0" y="829" width="57" height="48" fill="rgb(81,173,190)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.50" y="853.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b13</text>
+<rect x="0" y="1344" width="63" height="43" fill="rgb(217,190,185)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="31.50" y="1365.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b14</text>
+<rect x="0" y="1013" width="59" height="52" fill="rgb(182,117,170)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="29.50" y="1039.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b15</text>
+<rect x="0" y="708" width="57" height="36" fill="rgb(105,179,130)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.50" y="726.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b16</text>
+<rect x="0" y="1753" width="66" height="44" fill="rgb(159,154,80)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.00" y="1775.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b17</text>
+<rect x="0" y="303" width="51" height="48" fill="rgb(167,106,141)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="25.50" y="327.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b18</text>
+<rect x="55" y="554" width="31" height="50" fill="rgb(142,165,168)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="70.50" y="579.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b19</text>
+<rect x="57" y="725" width="19" height="37" fill="rgb(177,208,218)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="66.50" y="743.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b20</text>
+<rect x="0" y="1439" width="64" height="50" fill="rgb(133,160,126)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.00" y="1464.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b21</text>
+<rect x="51" y="302" width="34" height="49" fill="rgb(113,120,85)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="68.00" y="326.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b22</text>
+<rect x="65" y="1633" width="20" height="49" fill="rgb(94,187,104)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.00" y="1657.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b23</text>
+<rect x="57" y="800" width="28" height="45" fill="rgb(154,136,171)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="71.00" y="822.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b24</text>
+<rect x="0" y="428" width="54" height="39" fill="rgb(203,209,104)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="27.00" y="447.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b25</text>
+<rect x="0" y="512" width="55" height="40" fill="rgb(113,215,195)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="27.50" y="532.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b26</text>
+<rect x="0" y="1489" width="65" height="25" fill="rgb(215,100,190)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.50" y="1501.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b27</text>
+<rect x="0" y="101" width="46" height="39" fill="rgb(107,216,162)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="23.00" y="120.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b28</text>
+<rect x="62" y="1282" width="24" height="62" fill="rgb(120,193,175)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="74.00" y="1313.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b29</text>
+<rect x="54" y="473" width="26" height="24" fill="rgb(88,91,166)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="67.00" y="485.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b30</text>
+<rect x="53" y="351" width="26" height="34" fill="rgb(105,161,86)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="66.00" y="368.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b31</text>
+<rect x="0" y="385" width="53" height="43" fill="rgb(143,186,83)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="26.50" y="406.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b32</text>
+<rect x="61" y="1106" width="22" height="35" fill="rgb(110,148,112)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="72.00" y="1123.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b33</text>
+<rect x="59" y="899" width="27" height="54" fill="rgb(113,165,159)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="72.50" y="926.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b34</text>
+<rect x="55" y="516" width="31" height="38" fill="rgb(115,106,124)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="70.50" y="535.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b35</text>
+<rect x="0" y="1994" width="67" height="39" fill="rgb(117,172,178)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.50" y="2013.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b36</text>
+<rect x="66" y="1843" width="20" height="60" fill="rgb(126,129,114)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="76.00" y="1873.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b37</text>
+<rect x="62" y="1225" width="23" height="57" fill="rgb(115,105,171)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="73.50" y="1253.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b38</text>
+<rect x="0" y="552" width="55" height="52" fill="rgb(98,191,210)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="27.50" y="578.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b39</text>
+<rect x="56" y="633" width="29" height="26" fill="rgb(108,201,180)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="70.50" y="646.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b40</text>
+<rect x="59" y="953" width="27" height="55" fill="rgb(158,100,174)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="72.50" y="980.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b41</text>
+<rect x="0" y="1291" width="62" height="53" fill="rgb(112,194,98)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="31.00" y="1317.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b42</text>
+<rect x="0" y="1134" width="61" height="46" fill="rgb(177,209,102)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="30.50" y="1157.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b43</text>
+<rect x="0" y="1666" width="65" height="47" fill="rgb(98,211,213)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.50" y="1689.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b44</text>
+<rect x="61" y="1181" width="23" height="44" fill="rgb(179,167,98)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="72.50" y="1203.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b45</text>
+<rect x="42" y="10" width="39" height="22" fill="rgb(122,183,216)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="61.50" y="21.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b46</text>
+<rect x="0" y="1514" width="65" height="33" fill="rgb(189,144,207)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.50" y="1530.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b47</text>
+<rect x="59" y="1008" width="27" height="57" fill="rgb(194,158,112)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="72.50" y="1036.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b48</text>
+<rect x="0" y="1619" width="65" height="47" fill="rgb(208,143,165)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.50" y="1642.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b49</text>
+<rect x="0" y="1925" width="67" height="32" fill="rgb(155,106,182)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.50" y="1941.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b50</text>
+<rect x="0" y="744" width="57" height="38" fill="rgb(113,218,137)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.50" y="763.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b51</text>
+<rect x="0" y="467" width="54" height="45" fill="rgb(211,102,96)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="27.00" y="489.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b52</text>
+<rect x="65" y="1543" width="21" height="43" fill="rgb(181,93,171)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.50" y="1564.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b53</text>
+<rect x="67" y="1964" width="18" height="61" fill="rgb(199,165,112)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="76.00" y="1994.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b54</text>
+<rect x="0" y="637" width="56" height="34" fill="rgb(115,208,182)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.00" y="654.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b55</text>
+<rect x="67" y="2025" width="17" height="63" fill="rgb(98,124,218)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.50" y="2056.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b56</text>
+<rect x="65" y="1586" width="18" height="47" fill="rgb(101,96,144)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="74.00" y="1609.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b57</text>
+<rect x="50" y="256" width="34" height="46" fill="rgb(114,99,200)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="67.00" y="279.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b58</text>
+<rect x="0" y="179" width="50" height="37" fill="rgb(93,114,82)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="25.00" y="197.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b59</text>
+<rect x="61" y="1141" width="23" height="40" fill="rgb(158,174,137)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="72.50" y="1161.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b60</text>
+<rect x="57" y="692" width="23" height="33" fill="rgb(181,110,148)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="68.50" y="708.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b61</text>
+<rect x="67" y="1904" width="19" height="60" fill="rgb(113,101,187)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="76.50" y="1934.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b62</text>
+<rect x="50" y="211" width="36" height="45" fill="rgb(182,135,134)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="68.00" y="233.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b63</text>
+<rect x="0" y="256" width="50" height="47" fill="rgb(102,187,170)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="25.00" y="279.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b64</text>
+<rect x="0" y="877" width="57" height="56" fill="rgb(127,149,184)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.50" y="905.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b65</text>
+<rect x="0" y="2094" width="67" height="61" fill="rgb(141,123,100)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.50" y="2124.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b66</text>
+<rect x="46" y="96" width="40" height="44" fill="rgb(100,104,133)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="66.00" y="118.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b67</text>
+<rect x="0" y="1387" width="63" height="52" fill="rgb(127,209,161)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="31.50" y="1413.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b68</text>
+<rect x="57" y="845" width="27" height="54" fill="rgb(154,158,201)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="70.50" y="872.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b69</text>
+<rect x="44" y="54" width="42" height="42" fill="rgb(121,126,95)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="65.00" y="75.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b70</text>
+<rect x="64" y="1425" width="22" height="64" fill="rgb(121,159,131)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.00" y="1457.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b71</text>
+<rect x="0" y="1180" width="61" height="61" fill="rgb(158,168,148)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="30.50" y="1210.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b72</text>
+<rect x="0" y="2033" width="67" height="61" fill="rgb(144,153,218)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.50" y="2063.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b73</text>
+<rect x="0" y="24" width="42" height="38" fill="rgb(173,191,139)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="21.00" y="43.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b74</text>
+<rect x="55" y="497" width="28" height="19" fill="rgb(148,188,93)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="69.00" y="506.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b75</text>
+<rect x="56" y="659" width="22" height="33" fill="rgb(94,174,103)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="67.00" y="675.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b76</text>
+<rect x="0" y="1846" width="66" height="57" fill="rgb(185,91,132)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.00" y="1874.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b77</text>
+<rect x="50" y="179" width="36" height="32" fill="rgb(98,203,158)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="68.00" y="195.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b78</text>
+<rect x="0" y="1065" width="60" height="41" fill="rgb(93,166,157)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="30.00" y="1085.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b79</text>
+<rect x="66" y="1785" width="16" height="58" fill="rgb(210,132,110)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="74.00" y="1814.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b80</text>
+<rect x="0" y="216" width="50" height="40" fill="rgb(152,176,81)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="25.00" y="236.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b81</text>
+<rect x="0" y="782" width="57" height="47" fill="rgb(156,163,91)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.50" y="805.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b82</text>
+<rect x="63" y="1347" width="22" height="16" fill="rgb(140,158,185)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="74.00" y="1355.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b83</text>
+<rect x="0" y="1903" width="67" height="22" fill="rgb(129,134,98)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.50" y="1914.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b84</text>
+<rect x="54" y="432" width="20" height="25" fill="rgb(188,123,163)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="64.00" y="444.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b85</text>
+<rect x="0" y="671" width="56" height="37" fill="rgb(142,182,135)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.00" y="689.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b86</text>
+<rect x="0" y="62" width="44" height="39" fill="rgb(144,191,167)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="22.00" y="81.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b87</text>
+<rect x="0" y="0" width="37" height="24" fill="rgb(98,175,152)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="18.50" y="12.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b88</text>
+<rect x="57" y="762" width="27" height="38" fill="rgb(151,206,204)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="70.50" y="781.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b89</text>
+<rect x="49" y="140" width="33" height="39" fill="rgb(150,108,218)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="65.50" y="159.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b90</text>
+<rect x="0" y="604" width="56" height="33" fill="rgb(179,177,215)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="28.00" y="620.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b91</text>
+<rect x="54" y="457" width="26" height="16" fill="rgb(165,160,123)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="67.00" y="465.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b92</text>
+<rect x="0" y="1547" width="65" height="35" fill="rgb(106,88,165)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="32.50" y="1564.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b93</text>
+<rect x="0" y="972" width="59" height="41" fill="rgb(93,127,159)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="29.50" y="992.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b94</text>
+<rect x="66" y="1682" width="19" height="51" fill="rgb(137,109,185)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.50" y="1707.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b95</text>
+<rect x="0" y="1713" width="66" height="40" fill="rgb(204,138,195)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.00" y="1733.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b96</text>
+<rect x="67" y="2088" width="17" height="67" fill="rgb(113,188,192)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="75.50" y="2121.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b97</text>
+<rect x="63" y="1363" width="22" height="62" fill="rgb(118,150,188)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="74.00" y="1394.00" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b98</text>
+<rect x="0" y="1797" width="66" height="49" fill="rgb(137,193,125)" fill-opacity="0.72" stroke="#202020" stroke-width="0.6"/>
+<text x="33.00" y="1821.50" font-size="8" text-anchor="middle" dominant-baseline="middle" fill="#111">b99</text>
+<text x="0" y="-17.70" font-size="14" fill="#111">n100: W=86, H=2155, Area=185330, Aspect=25.0581</text>
+</svg>

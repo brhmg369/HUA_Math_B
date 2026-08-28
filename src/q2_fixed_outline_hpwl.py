@@ -16,6 +16,7 @@ The output is a checked feasible upper bound, not a proof of global optimality.
 from __future__ import annotations
 
 import argparse
+import colorsys
 import csv
 import hashlib
 import json
@@ -28,6 +29,11 @@ from pathlib import Path
 from typing import Iterable
 
 import numpy as np
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 try:
     from PIL import Image, ImageDraw, ImageFont
@@ -1180,7 +1186,9 @@ def validate_layout(instance: Instance, layout: Layout) -> dict[str, object]:
 
 def color_for_name(name: str) -> tuple[int, int, int]:
     digest = hashlib.sha1(name.encode("utf-8")).digest()
-    return (70 + digest[0] % 150, 70 + digest[1] % 150, 70 + digest[2] % 150)
+    hue = int.from_bytes(digest[:2], "big") / 65535.0
+    red, green, blue = colorsys.hls_to_rgb(hue, 0.76, 0.24)
+    return (round(255 * red), round(255 * green), round(255 * blue))
 
 
 def top_net_boxes(instance: Instance, placements: dict[str, Placement], limit: int = 18) -> list[tuple[float, float, float, float, float]]:
@@ -1280,31 +1288,26 @@ def write_svg(instance: Instance, layout: Layout, path: Path) -> None:
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{view}">',
         f'<rect x="0" y="0" width="{instance.outline_side}" height="{instance.outline_side}" fill="white" stroke="#111" stroke-width="2"/>',
     ]
-    for terminal in instance.terminals.values():
-        y_svg = instance.outline_side - terminal.y
-        parts.append(f'<circle cx="{terminal.x:.2f}" cy="{y_svg:.2f}" r="1.2" fill="#111" opacity="0.75"/>')
-    for hpwl, x1, y1, x2, y2 in top_net_boxes(instance, layout.placements):
-        parts.append(
-            f'<rect x="{x1:.2f}" y="{instance.outline_side - y2:.2f}" width="{x2 - x1:.2f}" height="{y2 - y1:.2f}" '
-            f'fill="none" stroke="#d94841" stroke-width="0.6" opacity="0.32"/>'
-        )
     for p in sorted(layout.placements.values(), key=lambda item: natural_key(item.name)):
         r, g, b = color_for_name(p.name)
         y_svg = instance.outline_side - p.y - p.height
         parts.append(
             f'<rect x="{p.x}" y="{y_svg}" width="{p.width}" height="{p.height}" '
-            f'fill="rgb({r},{g},{b})" fill-opacity="0.72" stroke="#222" stroke-width="0.45"/>'
+            f'fill="rgb({r},{g},{b})" fill-opacity="0.82" stroke="#4a4a4a" stroke-width="0.45"/>'
         )
         if len(layout.placements) <= 130 and min(p.width, p.height) >= 14:
             parts.append(
                 f'<text x="{p.x + p.width / 2:.2f}" y="{y_svg + p.height / 2:.2f}" '
                 f'font-size="7" text-anchor="middle" dominant-baseline="middle" fill="#111">{p.name}</text>'
             )
-    parts.append(
-        f'<text x="0" y="{-pad / 2:.2f}" font-size="12" fill="#111">'
-        f'{layout.chip}: L={layout.outline_side:.3f}, grid={layout.side}, '
-        f'HPWL={layout.hpwl:.2f}, deadspace={layout.actual_deadspace_ratio:.4f}</text>'
-    )
+    for hpwl, x1, y1, x2, y2 in top_net_boxes(instance, layout.placements):
+        parts.append(
+            f'<rect x="{x1:.2f}" y="{instance.outline_side - y2:.2f}" width="{x2 - x1:.2f}" height="{y2 - y1:.2f}" '
+            f'fill="none" stroke="#c4512d" stroke-width="0.8" opacity="0.72"/>'
+        )
+    for terminal in instance.terminals.values():
+        y_svg = instance.outline_side - terminal.y
+        parts.append(f'<circle cx="{terminal.x:.2f}" cy="{y_svg:.2f}" r="1.35" fill="#111"/>')
     parts.append("</svg>")
     path.write_text("\n".join(parts), encoding="utf-8")
 
@@ -1325,6 +1328,15 @@ def write_png(instance: Instance, layout: Layout, path: Path) -> None:
         outline=(20, 20, 20, 255),
         width=2,
     )
+    for p in sorted(layout.placements.values(), key=lambda item: natural_key(item.name)):
+        r, g, b = color_for_name(p.name)
+        x1 = margin + p.x * scale
+        y1 = margin + (instance.outline_side - p.y - p.height) * scale
+        x2 = margin + p.x2 * scale
+        y2 = margin + (instance.outline_side - p.y) * scale
+        draw.rectangle([x1, y1, x2, y2], fill=(r, g, b, 210), outline=(74, 74, 74, 255), width=1)
+        if len(layout.placements) <= 130 and min(p.width * scale, p.height * scale) >= 15:
+            draw.text(((x1 + x2) / 2, (y1 + y2) / 2), p.name, fill=(0, 0, 0, 255), anchor="mm", font=font)
     for hpwl, x1, y1, x2, y2 in top_net_boxes(instance, layout.placements):
         draw.rectangle(
             [
@@ -1333,28 +1345,76 @@ def write_png(instance: Instance, layout: Layout, path: Path) -> None:
                 margin + x2 * scale,
                 margin + (instance.outline_side - y1) * scale,
             ],
-            outline=(217, 72, 65, 90),
-            width=1,
+            outline=(196, 81, 45, 190),
+            width=2,
         )
-    for p in sorted(layout.placements.values(), key=lambda item: natural_key(item.name)):
-        r, g, b = color_for_name(p.name)
-        x1 = margin + p.x * scale
-        y1 = margin + (instance.outline_side - p.y - p.height) * scale
-        x2 = margin + p.x2 * scale
-        y2 = margin + (instance.outline_side - p.y) * scale
-        draw.rectangle([x1, y1, x2, y2], fill=(r, g, b, 184), outline=(25, 25, 25, 255), width=1)
-        if len(layout.placements) <= 130 and min(p.width * scale, p.height * scale) >= 15:
-            draw.text(((x1 + x2) / 2, (y1 + y2) / 2), p.name, fill=(0, 0, 0, 255), anchor="mm", font=font)
     for terminal in instance.terminals.values():
         x = margin + terminal.x * scale
         y = margin + (instance.outline_side - terminal.y) * scale
-        draw.ellipse([x - 2, y - 2, x + 2, y + 2], fill=(20, 20, 20, 190))
-    title = (
-        f"{layout.chip}: L={layout.outline_side:.3f}, grid={layout.side}, "
-        f"HPWL={layout.hpwl:.2f}, deadspace={layout.actual_deadspace_ratio:.4f}"
-    )
-    draw.text((margin, 22), title, fill=(0, 0, 0, 255), font=font)
+        draw.ellipse([x - 2.4, y - 2.4, x + 2.4, y + 2.4], fill=(15, 15, 15, 255))
     image.save(path)
+
+
+def write_hpwl_comparison(layouts: list[Layout], output_dir: Path) -> None:
+    """Plot the exact before/after values already stored in the Q2 summary."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    labels = [layout.chip for layout in layouts]
+    initial = np.asarray([layout.initial_hpwl for layout in layouts], dtype=float)
+    refined = np.asarray([layout.hpwl for layout in layouts], dtype=float)
+    improvement = 100.0 * (initial - refined) / initial
+    positions = np.arange(len(layouts))
+    width = 0.34
+
+    plt.rcParams.update(
+        {
+            "font.family": ["Microsoft YaHei", "SimHei", "DejaVu Sans"],
+            "axes.unicode_minus": False,
+            "font.size": 10,
+        }
+    )
+    fig, ax = plt.subplots(figsize=(7.2, 4.3))
+    before_bars = ax.bar(
+        positions - width / 2,
+        initial,
+        width,
+        label="几何合法化后",
+        color="#B8C2CC",
+        edgecolor="#59636E",
+        hatch="//",
+        linewidth=0.8,
+    )
+    after_bars = ax.bar(
+        positions + width / 2,
+        refined,
+        width,
+        label="局部重插入后",
+        color="#3F6F8F",
+        edgecolor="#29485D",
+        linewidth=0.8,
+    )
+    ax.set_xticks(positions, labels)
+    ax.set_ylabel("总 HPWL")
+    ax.set_ylim(0, max(initial) * 1.13)
+    ax.grid(axis="y", color="#D8DDE2", linewidth=0.7, alpha=0.8)
+    ax.set_axisbelow(True)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(frameon=False, ncols=2, loc="upper left")
+    for bars, values in ((before_bars, initial), (after_bars, refined)):
+        ax.bar_label(bars, labels=[f"{value:.1f}" for value in values], padding=3, fontsize=8)
+    for index, rate in enumerate(improvement):
+        ax.text(
+            positions[index],
+            max(initial[index], refined[index]) + max(initial) * 0.045,
+            f"下降 {rate:.4f}%",
+            ha="center",
+            va="bottom",
+            fontsize=8.5,
+            color="#9B3D22",
+        )
+    fig.tight_layout()
+    fig.savefig(output_dir / "q2_hpwl_before_after.png", dpi=400, bbox_inches="tight", facecolor="white")
+    fig.savefig(output_dir / "q2_hpwl_before_after.svg", bbox_inches="tight", facecolor="white")
+    plt.close(fig)
 
 
 def solve_all(
@@ -1396,6 +1456,7 @@ def solve_all(
         )
     write_summary(layouts, output_dir / "q2_summary.csv")
     write_candidate_rows(all_candidates, output_dir / "q2_candidate_runs.csv")
+    write_hpwl_comparison(layouts, output_dir / "figures")
     (output_dir / "q2_validation.json").write_text(json.dumps(all_validation, ensure_ascii=False, indent=2), encoding="utf-8")
     return layouts
 

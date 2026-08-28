@@ -1,45 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 536 392">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 416">
 <rect width="100%" height="100%" fill="white"/>
-<line x1="52" y1="52" x2="52" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="124" y1="52" x2="124" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="196" y1="52" x2="196" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="268" y1="52" x2="268" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="340" y1="52" x2="340" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="412" y1="52" x2="412" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="484" y1="52" x2="484" y2="340" stroke="#ddd" stroke-width="1"/>
-<line x1="52" y1="52" x2="484" y2="52" stroke="#ddd" stroke-width="1"/>
-<line x1="52" y1="124" x2="484" y2="124" stroke="#ddd" stroke-width="1"/>
-<line x1="52" y1="196" x2="484" y2="196" stroke="#ddd" stroke-width="1"/>
-<line x1="52" y1="268" x2="484" y2="268" stroke="#ddd" stroke-width="1"/>
-<line x1="52" y1="340" x2="484" y2="340" stroke="#ddd" stroke-width="1"/>
-<rect x="52" y="52" width="432" height="288" fill="none" stroke="#111" stroke-width="3"/>
-<rect x="124" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="196" y="196" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="340" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="268" y="196" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="196" y="268" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="340" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="268" y="268" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="196" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="268" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="196" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="268" y="124" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<rect x="124" y="52" width="72" height="72" fill="rgb(123,174,214)" stroke="white" stroke-width="2"/>
-<text x="268.00" y="172.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b1</text>
-<rect x="52" y="196" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
-<rect x="52" y="268" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
-<rect x="124" y="196" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
-<rect x="52" y="52" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
-<rect x="52" y="124" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
-<rect x="124" y="268" width="72" height="72" fill="rgb(230,172,98)" stroke="white" stroke-width="2"/>
-<text x="112.00" y="220.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b2</text>
-<rect x="340" y="268" width="72" height="72" fill="rgb(130,190,140)" stroke="white" stroke-width="2"/>
-<rect x="340" y="196" width="72" height="72" fill="rgb(130,190,140)" stroke="white" stroke-width="2"/>
-<text x="376.00" y="268.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b3</text>
-<rect x="412" y="52" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
-<rect x="412" y="268" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
-<rect x="412" y="196" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
-<rect x="412" y="124" width="72" height="72" fill="rgb(205,126,135)" stroke="white" stroke-width="2"/>
-<text x="448.00" y="196.00" text-anchor="middle" dominant-baseline="middle" font-size="18" font-family="Arial" font-weight="700" fill="#111">b4</text>
-<text x="52" y="26.0" font-size="16" font-family="Arial" fill="#111">Q4 optimum: 6 x 4, area=24</text>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L7,3.5 L0,7 z" fill="#333"/></marker></defs>
+<line x1="76" y1="60" x2="76" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="148" y1="60" x2="148" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="220" y1="60" x2="220" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="292" y1="60" x2="292" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="364" y1="60" x2="364" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="436" y1="60" x2="436" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="508" y1="60" x2="508" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="76" y1="60" x2="508" y2="60" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="76" y1="132" x2="508" y2="132" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="76" y1="204" x2="508" y2="204" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="76" y1="276" x2="508" y2="276" stroke="#e7e7e7" stroke-width="1"/>
+<line x1="76" y1="348" x2="508" y2="348" stroke="#e7e7e7" stroke-width="1"/>
+<rect x="148" y="132" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="220" y="204" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="364" y="60" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="292" y="204" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="220" y="276" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="364" y="132" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="292" y="276" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="220" y="60" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="292" y="60" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="220" y="132" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="292" y="132" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<rect x="148" y="60" width="72" height="72" fill="rgb(142,171,194)" stroke="white" stroke-width="1.5"/>
+<text x="292.00" y="180.00" text-anchor="middle" dominant-baseline="middle" font-size="19" font-family="Arial" font-weight="700" fill="#1f2529">b1</text>
+<rect x="76" y="204" width="72" height="72" fill="rgb(211,177,123)" stroke="white" stroke-width="1.5"/>
+<rect x="76" y="276" width="72" height="72" fill="rgb(211,177,123)" stroke="white" stroke-width="1.5"/>
+<rect x="148" y="204" width="72" height="72" fill="rgb(211,177,123)" stroke="white" stroke-width="1.5"/>
+<rect x="76" y="60" width="72" height="72" fill="rgb(211,177,123)" stroke="white" stroke-width="1.5"/>
+<rect x="76" y="132" width="72" height="72" fill="rgb(211,177,123)" stroke="white" stroke-width="1.5"/>
+<rect x="148" y="276" width="72" height="72" fill="rgb(211,177,123)" stroke="white" stroke-width="1.5"/>
+<text x="136.00" y="228.00" text-anchor="middle" dominant-baseline="middle" font-size="19" font-family="Arial" font-weight="700" fill="#1f2529">b2</text>
+<rect x="364" y="276" width="72" height="72" fill="rgb(148,184,157)" stroke="white" stroke-width="1.5"/>
+<rect x="364" y="204" width="72" height="72" fill="rgb(148,184,157)" stroke="white" stroke-width="1.5"/>
+<text x="400.00" y="276.00" text-anchor="middle" dominant-baseline="middle" font-size="19" font-family="Arial" font-weight="700" fill="#1f2529">b3</text>
+<rect x="436" y="60" width="72" height="72" fill="rgb(190,145,151)" stroke="white" stroke-width="1.5"/>
+<rect x="436" y="276" width="72" height="72" fill="rgb(190,145,151)" stroke="white" stroke-width="1.5"/>
+<rect x="436" y="204" width="72" height="72" fill="rgb(190,145,151)" stroke="white" stroke-width="1.5"/>
+<rect x="436" y="132" width="72" height="72" fill="rgb(190,145,151)" stroke="white" stroke-width="1.5"/>
+<text x="472.00" y="204.00" text-anchor="middle" dominant-baseline="middle" font-size="19" font-family="Arial" font-weight="700" fill="#1f2529">b4</text>
+<rect x="150" y="62" width="284" height="284" fill="none" stroke="#45545f" stroke-width="2.5" stroke-dasharray="9,7"/>
+<rect x="76" y="60" width="432" height="288" fill="none" stroke="#171717" stroke-width="4"/>
+<text x="292.0" y="28" text-anchor="middle" font-size="15" font-family="Microsoft YaHei,Arial" fill="#45545f">b1 矩形外接框（虚线）</text>
+<line x1="76" y1="385" x2="508" y2="385" stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="292.0" y="378" text-anchor="middle" font-size="16" font-family="Arial" fill="#222">6</text>
+<line x1="40" y1="60" x2="40" y2="348" stroke="#333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="28" y="204.0" text-anchor="middle" dominant-baseline="middle" font-size="16" font-family="Arial" fill="#222">4</text>
 </svg>

@@ -1,0 +1,53 @@
+[
+  {
+    "chip": "n100",
+    "num_blocks": 100,
+    "duplicate_names": [],
+    "overlap_count": 0,
+    "overlap_pairs_preview": [],
+    "placed_area": 179501,
+    "total_block_area": 179501,
+    "area_conserved": true,
+    "bounding_width": 86,
+    "bounding_height": 2155,
+    "bounding_area": 185330,
+    "area_lower_bound": 179501,
+    "gap_to_area_lower_bound": 0.03247335669439168,
+    "aspect_ratio": 25.058139534883722,
+    "valid": true
+  },
+  {
+    "chip": "n200",
+    "num_blocks": 200,
+    "duplicate_names": [],
+    "overlap_count": 0,
+    "overlap_pairs_preview": [],
+    "placed_area": 175696,
+    "total_block_area": 175696,
+    "area_conserved": true,
+    "bounding_width": 60,
+    "bounding_height": 3015,
+    "bounding_area": 180900,
+    "area_lower_bound": 175696,
+    "gap_to_area_lower_bound": 0.029619342500683,
+    "aspect_ratio": 50.25,
+    "valid": true
+  },
+  {
+    "chip": "n300",
+    "num_blocks": 300,
+    "duplicate_names": [],
+    "overlap_count": 0,
+    "overlap_pairs_preview": [],
+    "placed_area": 273170,
+    "total_block_area": 273170,
+    "area_conserved": true,
+    "bounding_width": 520,
+    "bounding_height": 557,
+    "bounding_area": 289640,
+    "area_lower_bound": 273170,
+    "gap_to_area_lower_bound": 0.06029212578247978,
+    "aspect_ratio": 1.0711538461538461,
+    "valid": true
+  }
+]

@@ -1,0 +1,26 @@
+\section*{附录 B\quad 程序代码}
+\addcontentsline{toc}{section}{附录 B 程序代码}
+
+\subsection*{B.1\quad 运行环境与复现说明}
+
+全部程序使用 Python 3 编写，所需第三方依赖统一列于项目根目录的 \texttt{requirements.txt}。在项目根目录中安装依赖后，依次运行问题一至问题四的主程序，即可在 \texttt{results/q1}—\texttt{results/q4} 目录中重新生成布局坐标、结果汇总、验证记录与布局图。推荐的执行顺序为
+\begin{enumerate}[label=\arabic*.,leftmargin=2.4em,itemsep=0.2em]
+  \item \texttt{python src/q1\_floorplanning.py}；
+  \item \texttt{python src/q1\_layout\_figures.py}；
+  \item \texttt{python src/q2\_fixed\_outline\_hpwl.py}；
+  \item \texttt{python src/q3\_min\_deadspace.py}；
+  \item \texttt{python src/plot\_q3\_tradeoff.py}；
+  \item \texttt{python src/q4\_nonrect\_floorplanning.py}。
+\end{enumerate}
+论文采用 XeLaTeX 排版，在 \texttt{paper} 目录内连续两次执行 \texttt{xelatex main.tex} 即可生成完整 PDF。
+
+\subsection*{B.2\quad 完整程序代码}
+
+鉴于完整求解与绘图程序篇幅较长，本文不在附录中重复排印源码。可提交压缩包已保留 \texttt{src} 目录下的全部 Python 程序，其中：
+\begin{itemize}[leftmargin=2.4em,itemsep=0.2em]
+  \item \path{src/q1_floorplanning.py} 负责问题一的自由轮廓搜索；
+  \item \path{src/q2_fixed_outline_hpwl.py} 负责问题二的网络驱动合法化与局部优化；
+  \item \path{src/q3_min_deadspace.py} 负责问题三的整数边长搜索；
+  \item \path{src/q4_nonrect_floorplanning.py} 负责问题四的形状级枚举。
+\end{itemize}
+其余脚本用于生成论文图表。所有最终数值、坐标与验证记录一并保存于 \texttt{results} 目录，便于对照正文复核。

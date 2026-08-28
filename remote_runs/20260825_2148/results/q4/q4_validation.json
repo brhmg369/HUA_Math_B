@@ -1,0 +1,26 @@
+{
+  "module_count": 4,
+  "module_names": [
+    "b1",
+    "b2",
+    "b3",
+    "b4"
+  ],
+  "missing_modules": [],
+  "duplicate_modules": [],
+  "width": 6,
+  "height": 4,
+  "outline_area": 24,
+  "total_module_area": 24,
+  "placed_area": 24,
+  "unique_occupied_area": 24,
+  "dead_area": 0,
+  "area_lower_bound": 24,
+  "lower_bound_attained": true,
+  "bounding_width_from_cells": 6,
+  "bounding_height_from_cells": 4,
+  "overlap_cell_count": 0,
+  "out_of_bounds_modules": [],
+  "area_conserved": true,
+  "valid": true
+}

@@ -1,2 +1,2 @@
 module_count,total_module_area,area_lower_bound,width,height,outline_area,dead_area,lower_bound_attained,aspect_ratio,explored_nodes,runtime_sec
-4,24,24,6,4,24,0,True,1.50000000,98,0.002100
+4,24,24,6,4,24,0,True,1.50000000,98,0.001569

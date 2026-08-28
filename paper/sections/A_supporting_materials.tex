@@ -1,0 +1,60 @@
+\section*{附录 A\quad 支撑材料清单}
+\addcontentsline{toc}{section}{附录 A 支撑材料清单}
+
+\subsection*{A.1\quad 数据与结果文件}
+问题二三组实例的模块、Terminal 与网络规模见表~\ref{tab:appendix_q2_data_scale}。
+
+\begin{table}[H]
+  \centering
+  \caption{问题二三组实例的数据规模}
+  \label{tab:appendix_q2_data_scale}
+  \small
+  \begin{tabular}{lrrrr}
+    \toprule
+    实例 & 硬模块数 & 外部 Terminal 数 & 网络数 & 引脚总数 \\
+    \midrule
+    \texttt{n100} & 100 & 334 & 885  & 1873 \\
+    \texttt{n200} & 200 & 564 & 1585 & 3599 \\
+    \texttt{n300} & 300 & 569 & 1893 & 4358 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{A.2\quad 问题三验证与口径敏感性}
+问题三完整验证结果见表~\ref{tab:q3_validation_appendix}。其中，轮廓外 Terminal 数与 $S_{\mathrm{terminal}}$ 仅用于检验另一种题意解释：若要求 Terminal 也必须包含在轮廓内，则轮廓边长至少分别为 $444$、$438$、$548$；该替代口径不改变正文采用的硬模块轮廓模型及其结果。
+
+\begin{table}[H]
+  \centering
+  \caption{问题三布局完整验证与 Terminal 口径敏感性}
+  \label{tab:q3_validation_appendix}
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{c r r c c r r}
+    \toprule
+    实例 & 越界模块数 & 重叠对数 & 面积一致性 & HPWL 复算一致 & 轮廓外 Terminal 数 & $S_{\mathrm{terminal}}$ \\
+    \midrule
+    \texttt{n100} & 0 & 0 & 是 & 是 & 168 & 444 \\
+    \texttt{n200} & 0 & 0 & 是 & 是 & 284 & 438 \\
+    \texttt{n300} & 0 & 0 & 是 & 是 & 290 & 548 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{A.3\quad 图表与其他支撑材料}
+问题二布局的详细约束与数值一致性复核见表~\ref{tab:appendix_q2_validation}。
+
+\begin{table}[H]
+  \centering
+  \caption{问题二布局约束与 HPWL 一致性验证}
+  \label{tab:appendix_q2_validation}
+  \small
+  \begin{tabular}{lrrrrcc}
+    \toprule
+    实例 & 缺失数 & 重复数 & 越界数 & 重叠对数 & 面积一致性 & HPWL 计算一致 \\
+    \midrule
+    \texttt{n100} & 0 & 0 & 0 & 0 & 是 & 是 \\
+    \texttt{n200} & 0 & 0 & 0 & 0 & 是 & 是 \\
+    \texttt{n300} & 0 & 0 & 0 & 0 & 是 & 是 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
